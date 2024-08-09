@@ -4,11 +4,10 @@ import org.springframework.stereotype.Service;
 
 @Service
 public interface SalaryService {
-    public Long getSalary(Long empId);
-    public Long getBasic(Long empId);
-    public Long getHRA(Long empId);
-    public Long getAllowance(Long empId);
-    public Long getTotalCtc(Long empId);
+    Long getSalary(Long empId);
+    Long getBasic(Long empId);
+    Long getHRA(Long empId);
+    Long getAllowance(Long empId);
+    Long getTotalCtc(Long empId);
 
-    Long getHRA();
 }

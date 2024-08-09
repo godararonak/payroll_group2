@@ -1,5 +1,6 @@
 package com.example.salary.services.Impl;
 
+import com.example.salary.entity.Salary;
 import com.example.salary.repository.SalaryRepo;
 import com.example.salary.services.SalaryService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +12,13 @@ public class SalaryServiceImpl implements SalaryService {
     @Override
     public Long getHRA(Long empId) {
 
-        return 1L;
+        var salaryData = salaryRepo.findById(empId);
+        if(salaryData == null) {
+            System.out.println("Employee salary data not found");
+        }
+        Salary s = new Salary();
+
+        return 0l;
     }
 
     @Override
