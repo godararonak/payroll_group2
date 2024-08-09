@@ -16,7 +16,6 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Leave {
-    //TODO Are enums necessary?
     public enum LeaveType {
         PAID,
         UNPAID
