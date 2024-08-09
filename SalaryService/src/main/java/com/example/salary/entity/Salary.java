@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class salary {
+public class Salary {
     @Id
     @GeneratedValue(
             strategy = GenerationType.IDENTITY //TODO IDENTITY or AUTO?

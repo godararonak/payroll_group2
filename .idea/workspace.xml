@@ -5,10 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b9ffdc82-14b3-4f05-a7ff-ec0b5b802fcd" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/SalaryService/src/main/java/com/example/salary/repository/SalaryRepo.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/SalaryService/src/main/java/com/example/salary/services/SalaryService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SalaryService/src/main/java/com/example/salary/entity/monthlySalary.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SalaryService/src/main/java/com/example/salary/entity/salary.java" beforeDir="false" afterPath="$PROJECT_DIR$/SalaryService/src/main/java/com/example/salary/entity/salary.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SalaryService/src/main/java/com/example/salary/entity/monthly_salary.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -19,7 +18,6 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Class" />
-        <option value="Interface" />
       </list>
     </option>
   </component>
@@ -35,13 +33,13 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "parush",
-    "kotlin-language-version-configured": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;aghnash&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -52,8 +50,5 @@
       <updated>1723182329660</updated>
     </task>
     <servers />
-  </component>
-  <component name="VcsManagerConfiguration">
-    <option name="LAST_COMMIT_MESSAGE" value="" />
   </component>
 </project>
