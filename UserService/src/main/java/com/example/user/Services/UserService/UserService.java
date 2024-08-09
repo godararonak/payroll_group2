@@ -15,4 +15,7 @@ public interface UserService {
 
     void deleteEmployee(Long id);
 
+    Boolean updateUser(Long id,Users users);
+
+    String getMethodTesting();
 }

@@ -4,11 +4,11 @@ package com.example.user.Controller;
 import com.example.user.Services.UserService.UserService;
 import com.example.user.entity.Users;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 
@@ -17,6 +17,11 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+
+    @GetMapping("/method-testing")
+    public String getMethodTesting(){
+        return this.userService.getMethodTesting();
+    }
 
     @GetMapping()
     public List<Users> getAllEmployees(){
@@ -34,7 +39,7 @@ public class UserController {
 
     }
 
-    @PostMapping()
+    @PostMapping("/tts")
     public Users createUsers(@RequestBody Users user){
 
         return userService.saveEmployee(user);
@@ -42,13 +47,13 @@ public class UserController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Users> updateEmployee(@PathVariable Long id, @RequestBody Users users){
+    public ResponseEntity<String> updateEmployee(@PathVariable Long id, @RequestBody Users users){
 
-        if(userService.getEmployeeById(id)!=null){
-           return ResponseEntity.notFound().build();
-        }
+    boolean isUpdated = userService.updateUser(id,users);
+        if(isUpdated)
+            return ResponseEntity.status(HttpStatus.OK).body("Employee details Updated Successfully");
 
-        return null;
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body( "Failure to update Employee");
+    }
     }
 
-}

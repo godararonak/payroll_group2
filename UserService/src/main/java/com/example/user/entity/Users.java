@@ -17,14 +17,14 @@ public class Users {
     private long id;
     private String f_name;
     private String l_name;
-    private LocalDate date_of_birth;
-    private LocalDate hire_Date;
-    private String Email;
-    private String Phone_Number;
-    private String role;
-    private long Manager_Id;
-    private double total_ctc;
-    private String password;
+//    private LocalDate date_of_birth;
+//    private LocalDate hire_Date;
+//    private String Email;
+//    private String Phone_Number;
+//    private String role;
+//    private long Manager_Id;
+//    private double total_ctc;
+//    private String password;
 
 
 }
