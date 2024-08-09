@@ -1,6 +1,5 @@
 package com.example.salary.entity;
 
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -9,20 +8,18 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-//TODO employee connection
+import java.time.LocalDate;
 
-@Entity(name = "Salary")    //TODO plural? convention?
+@Entity(name = "working_days")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class salary {
+public class WorkingDays {
     @Id
     @GeneratedValue(
-            strategy = GenerationType.IDENTITY //TODO IDENTITY or AUTO?
+            strategy = GenerationType.AUTO
     )
-    private long id;
-    private double basic;
-    private double hra;
-    private double allowance;
-    private double total_ctc;
+    private long Id;
+    private LocalDate month;
+    private Integer totalWorkingDays;
 }
