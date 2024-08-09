@@ -28,7 +28,8 @@ public class SalaryServiceImpl implements SalaryService {
 
     @Override
     public Double getSalary(Long empId) {
-
+        var deductions = 0;
+        //Todo Update business logic
 
 
         return salaryRepo.findById(empId).orElseThrow(()-> new RuntimeException("Error in getting Salary with id:" + empId)).getTotalCtc() - deductions;
