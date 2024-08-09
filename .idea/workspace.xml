@@ -5,9 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b9ffdc82-14b3-4f05-a7ff-ec0b5b802fcd" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/SalaryService/src/main/java/com/example/salary/entity/monthlySalary.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SalaryService/src/main/java/com/example/salary/entity/monthly_salary.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/SalaryService/src/main/java/com/example/salary/entity/Leave.java" beforeDir="false" afterPath="$PROJECT_DIR$/SalaryService/src/main/java/com/example/salary/entity/Leave.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SalaryService/src/main/java/com/example/salary/entity/MonthlySalary.java" beforeDir="false" afterPath="$PROJECT_DIR$/SalaryService/src/main/java/com/example/salary/entity/MonthlySalary.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SalaryService/src/main/java/com/example/salary/entity/Salary.java" beforeDir="false" afterPath="$PROJECT_DIR$/SalaryService/src/main/java/com/example/salary/entity/Salary.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UserService/src/main/java/com/example/user/entity/Users.java" beforeDir="false" afterPath="$PROJECT_DIR$/UserService/src/main/java/com/example/user/entity/Users.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
