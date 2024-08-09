@@ -4,41 +4,39 @@ import com.example.salary.entity.Salary;
 import com.example.salary.repository.SalaryRepo;
 import com.example.salary.services.SalaryService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.client.RestTemplate;
 
 public class SalaryServiceImpl implements SalaryService {
     @Autowired
     private SalaryRepo salaryRepo;
 
     @Override
-    public Long getHRA(Long empId) {
-
-        var salaryData = salaryRepo.findById(empId);
-        if(salaryData == null) {
-            System.out.println("Employee salary data not found");
-        }
-        Salary s = new Salary();
-
-        return 0l;
+    public Double getHRA(Long empId) {
+        //ToDo check for exception
+        return salaryRepo.findById(empId).orElseThrow(()-> new RuntimeException("Error in getting HRA with id:" + empId)).getHra();
     }
 
     @Override
-    public Long getAllowance(Long empId) {
-        return 0L;
+    public Double getAllowance(Long empId) {
+        return salaryRepo.findById(empId).orElseThrow(()-> new RuntimeException("Error in getting Allowance with id:" + empId)).getAllowance();
     }
 
     @Override
-    public Long getTotalCtc(Long empId) {
-        return 0L;
+    public Double getTotalCtc(Long empId) {
+        return salaryRepo.findById(empId).orElseThrow(()-> new RuntimeException("Error in getting TotalCTC with id:" + empId)).getTotalCtc();
     }
 
     @Override
-    public Long getSalary(Long empId) {
-        return 1L;
+    public Double getSalary(Long empId) {
+
+
+
+        return salaryRepo.findById(empId).orElseThrow(()-> new RuntimeException("Error in getting Salary with id:" + empId)).getTotalCtc() - deductions;
     }
 
     @Override
-    public Long getBasic(Long empId) {
-        return 0L;
+    public Double getBasic(Long empId) {
+        return salaryRepo.findById(empId).orElseThrow(()-> new RuntimeException("Error in getting basic with id:" + empId)).getBasic();
     }
 
 
