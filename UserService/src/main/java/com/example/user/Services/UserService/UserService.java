@@ -11,11 +11,13 @@ public interface UserService {
 
     Users getEmployeeById(Long id);
 
-    Users saveEmployee(Users employee);
+    void createEmployee(Users employee);
 
-    void deleteEmployee(Long id);
+    boolean deleteEmployee(Long id);
 
     Boolean updateUser(Long id,Users users);
 
     String getMethodTesting();
+
+//    void createEmployee(Users user);
 }

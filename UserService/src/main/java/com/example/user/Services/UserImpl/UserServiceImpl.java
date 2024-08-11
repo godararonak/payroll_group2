@@ -3,8 +3,10 @@ package com.example.user.Services.UserImpl;
 import com.example.user.Repository.UserRepo;
 import com.example.user.Services.UserService.UserService;
 import com.example.user.entity.Users;
+import com.example.user.exception.ResourceNotFoundException;
+import com.example.user.exception.ResourceNotFoundException;
+//import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.context.config.ConfigDataResourceNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -23,22 +25,37 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Users getEmployeeById(Long id) {
+    public Users getEmployeeById(Long employeeId) {
 
-        return userRepo.findById(id).orElseThrow(() -> new RuntimeException("User not found with ID: " + id));
+        Users foundEmployee = userRepo.findById(employeeId).orElseThrow(
+                () -> new ResourceNotFoundException("Employee" , "EmployeeId" , employeeId.toString())
+        );
+
+        return foundEmployee;
+
     }
 
     @Override
-    public Users saveEmployee(Users employee) {
-        return userRepo.save(employee);
+    public void createEmployee(Users employee) {
+
+        Optional<Users> foundEmployee= userRepo.findByEmail(employee.getEmail());
+
+        if(foundEmployee.isPresent()){
+           throw new RuntimeException("Employee already exists with this Email- " + employee.getEmail());
+        }
+        userRepo.save(employee);
+
+
     }
 
     @Override
     public Boolean updateUser(Long id,Users user){
 
-        Users userfound = userRepo.findById(id).orElseThrow(() -> new RuntimeException("Employee "+ "Employee_Id" + id.toString()));
+        Users userfound = userRepo.findById(id).orElseThrow(
+                () -> new ResourceNotFoundException("Employee ", "Employee_Id" , id.toString())
+        );
 
-        if(userfound.equals(true)){
+        if(userfound != null){
         userRepo.deleteById(id);
         userRepo.save(user);
 
@@ -52,8 +69,18 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void deleteEmployee(Long id) {
+    public boolean deleteEmployee(Long employeeId) {
 
-        userRepo.deleteById(id);
+        boolean isDeleted = false;
+
+        Users user = userRepo.findById(employeeId).orElseThrow(
+                () -> new ResourceNotFoundException("Employee", "EmployeeId", employeeId.toString())
+        );
+
+        if(user != null){
+            userRepo.deleteById(employeeId);
+            isDeleted= true;
+        }
+    return isDeleted;
     }
 }
