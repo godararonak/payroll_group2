@@ -9,10 +9,12 @@
         <option value="$PROJECT_DIR$/SalleryService/pom.xml" />
         <option value="$PROJECT_DIR$/UserService/pom.xml" />
         <option value="$PROJECT_DIR$/RegistryService/pom.xml" />
+        <option value="$PROJECT_DIR$/SalaryService/salary/pom.xml" />
       </list>
     </option>
     <option name="ignoredFiles">
       <set>
+        <option value="$PROJECT_DIR$/SalaryService/pom.xml" />
         <option value="$PROJECT_DIR$/SalleryService/sallery/pom.xml" />
         <option value="$PROJECT_DIR$/UserService/user/pom.xml" />
       </set>
