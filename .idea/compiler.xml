@@ -9,6 +9,7 @@
         <outputRelativeToContentRoot value="true" />
         <module name="RegistryService" />
         <module name="salary" />
+        <module name="ApiGatewayService" />
         <module name="user" />
       </profile>
     </annotationProcessing>
@@ -19,6 +20,7 @@
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="ApiGatewayService" options="-parameters" />
       <module name="RegistryService" options="-parameters" />
       <module name="salary" options="-parameters" />
       <module name="sallery" options="-parameters" />
