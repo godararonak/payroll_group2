@@ -15,8 +15,6 @@ import java.time.LocalDate;
 @Entity
 @Table(name = "employee")
 @NoArgsConstructor
-@Getter
-@Setter
 @Data
 
 public class Users {
@@ -68,5 +66,8 @@ public class Users {
     @NotNull(message = "Set a temporary Password")
     @Column(name = "Password")
     private String password;
+
+    @Column(name = "isActive", nullable = false, columnDefinition = "boolean default true")
+    private boolean isActive = true;
 
 }

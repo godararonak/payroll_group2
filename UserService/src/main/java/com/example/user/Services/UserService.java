@@ -14,7 +14,7 @@ public interface UserService {
 
     Users createEmployee(Users employee);
 
-    boolean deleteEmployee(Long id);
+//    boolean deleteEmployee(Long id);
 
     Users updateUser(Long id,Users users);
 }
