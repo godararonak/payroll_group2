@@ -1,17 +1,16 @@
 package com.example.salary.Dto;
 
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 
-@NoArgsConstructor
 @Data
 public class UserDto {
 
-    private long id;
+    private Long id;
 
     private String f_name;
+
 
     private String l_name;
 
@@ -21,14 +20,15 @@ public class UserDto {
 
     private String email;
 
-    private String phone_number;
+    private String Phone_Number;
 
     private String role;
 
-    private long manager_id;
+    private long Manager_Id;
 
     private double total_ctc;
 
     private String password;
+
 
 }

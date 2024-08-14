@@ -27,15 +27,19 @@ public class Users {
 
 
     @NotNull(message = "First Name is Required")
+    @Column(name = "First_Name")
     private String f_name;
 
     @NotNull(message = "Last Name is Required")
+    @Column(name = "Last_Name")
     private String l_name;
 
     @Past(message = "Date of Birth Should be valid")
+    @Column(name = "Date_OF_Birth")
     private LocalDate date_of_birth;
 
     @NotNull(message = "First Name is Required")
+    @Column(name = "Hire_Date")
     private LocalDate hire_Date;
 
     @NotNull(message = "First Name is Required")
@@ -50,16 +54,19 @@ public class Users {
 
     @NotNull(message ="Assign a role to Employee")
 //    @Enumerated(EnumType.STRING)
+    @Column(name = "Role")
     private String role;
 
     @NotNull(message = "Manager Id is required")
-    @Column(name="manager_id")
+    @Column(name="Manager_id")
     private long Manager_Id;
 
     @NotNull(message = "Required Field")
+    @Column(name = "Total_CTC")
     private double total_ctc;
 
     @NotNull(message = "Set a temporary Password")
+    @Column(name = "Password")
     private String password;
 
 }

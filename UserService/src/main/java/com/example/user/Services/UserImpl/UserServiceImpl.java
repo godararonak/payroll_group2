@@ -18,6 +18,16 @@ public class UserServiceImpl implements UserService {
     private UserRepo userRepo;
 
     @Override
+    public Boolean exists(Long employeeId){
+
+        boolean exist = false;
+        exist = userRepo.existsById(employeeId);
+
+        return exist;
+
+    }
+
+    @Override
     public List<Users> getAllEmployees() {
         return userRepo.findAll();
     }

@@ -19,6 +19,19 @@ import java.util.List;
         @Autowired
         UserService userService;
 
+        @GetMapping("/exist/{id}")
+        public ResponseEntity<String> existsById(@PathVariable Long empId){
+
+        Boolean ans = userService.exists(empId);
+
+        if(ans){
+            return ResponseEntity.status(HttpStatus.FOUND).body("User exists");
+        }else{
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User does not exist");
+        }
+
+        }
+
         @GetMapping("/ping")
         public ResponseEntity<String> Ping() {
             System.out.println("ping is successfully");
@@ -33,12 +46,11 @@ import java.util.List;
 
         }
 
-        @GetMapping("/{employeeId}")
+        @GetMapping("/fetchEmployee/{employeeId}")
         public ResponseEntity<Users> getEmployeeById(@PathVariable Long employeeId){
             System.out.println("get mapping successfull by id");
             Users user = userService.getEmployeeById(employeeId);
             return ResponseEntity.status(HttpStatus.OK).body(user);
-
         }
 
         @PostMapping("/createEmployee")

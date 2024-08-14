@@ -10,9 +10,8 @@ import com.example.salary.Repository.LeavesRepo;
 import com.example.salary.Repository.SalaryRepo;
 import com.example.salary.Services.LeaveService;
 import org.modelmapper.ModelMapper;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -20,7 +19,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -35,15 +34,18 @@ public class LeaveServiceImpl implements LeaveService {
     @Autowired
     SalaryRepo salaryRepo;
 
-    @Autowired
-    RestTemplate restTemplate;
-
-    private Logger logger= LoggerFactory.getLogger(LeaveServiceImpl.class);
-
     @Override
     public Leave takeLeave(Leave leave) {
 
         // verify from user service that employee should exist
+//
+//        RestTemplate restTemplate = new RestTemplate();
+//        Long empId = leave.getEmployeeId();
+//
+//        String url = "http://localhost:8080/api/v1/employees/fetchEmployee/" + empId;
+//
+//        ResponseEntity<UserDto> response = restTemplate.getForEntity(url, UserDto.class);
+//
 
         UserDto userDto1 =  restTemplate.getForObject("http://localhost:8989/api/v1/employees/"+leave.getEmployeeId(),UserDto.class);
 
@@ -100,6 +102,16 @@ public class LeaveServiceImpl implements LeaveService {
 
         // verify employeeId from employee service
 
+        RestTemplate restTemplate = new RestTemplate();
+
+        String url = "http://localhost:8080/api/v1/employees/fetchEmployee/" + employeeId;
+
+        ResponseEntity<UserDto> response = restTemplate.getForEntity(url, UserDto.class);
+
+//        if(response.equals())
+
+//        UserDto userDto = response.getBody();
+
 
         List<Leaves> leaves = leavesRepo.findByemployeeId(employeeId);
         List<LocalDate> ans= new ArrayList<>();
@@ -111,7 +123,7 @@ public class LeaveServiceImpl implements LeaveService {
             if(month<s.getMonthValue() || month>e.getMonthValue())
                 continue;
 
-            //[m1 ....m....m2]
+            //[m1....m....m2]
             while(!s.equals(e)){
                 if(s.getMonthValue()==month && !s.getDayOfWeek().equals("SATURDAY") && !s.getDayOfWeek().equals("SUNDAY")){
                    ans.add(s);

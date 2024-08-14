@@ -6,6 +6,8 @@ import java.util.List;
 
 public interface UserService {
 
+    Boolean exists(Long id);
+
     List<Users> getAllEmployees();
 
     Users getEmployeeById(Long id);
