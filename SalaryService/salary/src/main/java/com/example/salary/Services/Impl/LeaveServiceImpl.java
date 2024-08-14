@@ -1,6 +1,7 @@
 package com.example.salary.Services.Impl;
 import com.example.salary.Dto.Leave;
 import com.example.salary.Dto.MonthlySalary;
+import com.example.salary.Dto.UserDto;
 import com.example.salary.Entity.Leaves;
 import com.example.salary.Entity.Salary;
 import com.example.salary.ExceptionHandling.DuplicateResourceException;
@@ -9,12 +10,17 @@ import com.example.salary.Repository.LeavesRepo;
 import com.example.salary.Repository.SalaryRepo;
 import com.example.salary.Services.LeaveService;
 import org.modelmapper.ModelMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
+
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
@@ -29,11 +35,15 @@ public class LeaveServiceImpl implements LeaveService {
     @Autowired
     SalaryRepo salaryRepo;
 
+    @Autowired
+    RestTemplate restTemplate;
+
+    private Logger logger= LoggerFactory.getLogger(LeaveServiceImpl.class);
+
     @Override
     public Leave takeLeave(Leave leave) {
 
         // verify from user service that employee should exist
-
 
         // validation that there should not be any other leave in the same time period
 

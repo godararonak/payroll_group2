@@ -12,7 +12,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-import java.util.ArrayList;
+import org.springframework.web.client.RestTemplate;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,10 +25,16 @@ public class SalaryServiceImpl implements SalaryService {
     @Autowired
     LeavesRepo leavesRepo;
 
+    @Autowired
+    RestTemplate restTemplate;
+
+
     @Override
     public Salary saveSalary(Salary salary) {
 
         // verify that employee present in DB from user service
+
+
 
 
         // verify that employee salary not already in DB
