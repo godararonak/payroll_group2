@@ -47,6 +47,14 @@ public class LeaveServiceImpl implements LeaveService {
 //        ResponseEntity<UserDto> response = restTemplate.getForEntity(url, UserDto.class);
 //
 
+        UserDto userDto1 =  restTemplate.getForObject("http://localhost:8989/api/v1/employees/"+leave.getEmployeeId(),UserDto.class);
+
+        if(userDto1.getId()!=0){
+
+        }
+
+        logger.info("{}",userDto1);
+
         // validation that there should not be any other leave in the same time period
 
         List<Leaves> leaves1 = leavesRepo.findByemployeeId(leave.getEmployeeId());
