@@ -1,0 +1,21 @@
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    fetch-registry: true
+    register-with-eureka: true
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+      
+
+logging:
+  level:
+    root: INFO                # Default log level
+    com.example: DEBUG         # Set log level for a specific package (replace with your package)
+    org.springframework.web: WARN  # Reduce log level for Spring's web package
+  file:
+    name: logs/application.log # Log file location
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n"  # Pattern for console logging
+    file: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n"     # Pattern for file logging
+

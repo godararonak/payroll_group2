@@ -1,5 +1,7 @@
 package com.example.salary.Services.Impl;
+
 import com.example.salary.Dto.AllEmployeeSalary;
+import com.example.salary.Dto.UserDto;
 import com.example.salary.Entity.Salary;
 import com.example.salary.ExceptionHandling.DuplicateResourceException;
 import com.example.salary.ExceptionHandling.ResourceNotFoundException;
@@ -11,9 +13,15 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -29,13 +37,26 @@ public class SalaryServiceImpl implements SalaryService {
     public Salary saveSalary(Salary salary) {
 
         // verify that employee present in DB from user service
+        RestTemplate restTemplate = new RestTemplate();
 
+        Long empId = salary.getEmployeeId();
 
-        // verify that employee salary not already in DB
         Optional<Salary> existingSalary = salaryRepo.findByemployeeId(salary.getEmployeeId());
 
+        String url = "http://localhost:8484/api/v1/employees/fetchEmployee/" + empId;
+
+        ResponseEntity<UserDto> response = restTemplate.getForEntity(url, UserDto.class);
+        UserDto userdto = response.getBody();
+        Long t = userdto.getId();
+
+        // verify that employee salary not already in DB
         if (existingSalary.isPresent()) {
+
             throw new DuplicateResourceException("employee","id", salary.getEmployeeId());
+        }
+        else if(!Objects.equals(empId, t)){
+           throw new ResourceNotFoundException("User does not exist.","empId",salary.getEmployeeId());
+
         }
 
         return salaryRepo.save(salary);
@@ -45,9 +66,18 @@ public class SalaryServiceImpl implements SalaryService {
     public Salary updateSalary(Long employeeId,Salary salary) {
 
         // verify employee from user service
+        RestTemplate restTemplate = new RestTemplate();
+        String url = "http://localhost:8484/api/v1/employees/fetchEmployee/" + employeeId;
 
+        ResponseEntity<UserDto> response = restTemplate.getForEntity(url, UserDto.class);
 
-        //
+         UserDto userdto = response.getBody();
+
+        if(userdto.getId() == null || !userdto.getId().equals(employeeId)){
+
+            throw new ResourceNotFoundException("employee", "id",employeeId);
+
+        }
 
        Salary salary1 =salaryRepo.findByemployeeId(employeeId)
                        .orElseThrow(()->new ResourceNotFoundException("employee","id", employeeId));

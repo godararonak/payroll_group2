@@ -16,26 +16,26 @@ public class SalaryController {
   @Autowired
     SalaryService salaryService;
 
-    @PostMapping("/")
+    @PostMapping("/{id}")
     public ResponseEntity<Salary> createSalary(@RequestBody Salary salary) {
         Salary createdSalary = salaryService.saveSalary(salary);
         return new ResponseEntity<>(createdSalary, HttpStatus.CREATED);
     }
 
-    @PutMapping("/{employeeId}")
+    @PutMapping("updateById/{employeeId}")
     public ResponseEntity<Salary> updateSalary(@PathVariable Long employeeId, @RequestBody Salary salary) {
         Salary updatedSalary = salaryService.updateSalary(employeeId,salary);
         return new ResponseEntity<>(updatedSalary, HttpStatus.OK);
     }
 
 
-    @DeleteMapping("/{employeeId}")
+    @DeleteMapping("deleteBYId/{employeeId}")
     public ResponseEntity<ApiResponse> deleteSalary(@PathVariable Long employeeId) {
         salaryService.deleteSalary(employeeId);
         return new ResponseEntity<>(new ApiResponse("Employee Deleted Successfully",true), HttpStatus.OK);
     }
 
-    @GetMapping("/{employeeId}")
+    @GetMapping("fetchById/{employeeId}")
     public ResponseEntity<Salary> getSalary(@PathVariable Long employeeId) {
         Salary salary = salaryService.getSalary(employeeId);
         return new ResponseEntity<>(salary, HttpStatus.OK);

@@ -14,7 +14,6 @@ public class GlobalExceptionHandler {
 
     }
 
-
     @ExceptionHandler(DuplicateResourceException.class)
     public ApiResponse duplicateResourceException(DuplicateResourceException ex){
         String message = ex.getMessage();
@@ -22,6 +21,5 @@ public class GlobalExceptionHandler {
         return  apiResponse;
 
     }
-
 
 }
