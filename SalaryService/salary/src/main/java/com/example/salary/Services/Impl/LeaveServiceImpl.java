@@ -39,7 +39,7 @@ public class LeaveServiceImpl implements LeaveService {
 
         // verify from user service that employee should exist
 //
-//        RestTemplate restTemplate = new RestTemplate();
+        RestTemplate restTemplate = new RestTemplate();
 //        Long empId = leave.getEmployeeId();
 //
 //        String url = "http://localhost:8080/api/v1/employees/fetchEmployee/" + empId;
@@ -53,7 +53,7 @@ public class LeaveServiceImpl implements LeaveService {
 
         }
 
-        logger.info("{}",userDto1);
+//        logger.info("{}",userDto1);
 
         // validation that there should not be any other leave in the same time period
 
