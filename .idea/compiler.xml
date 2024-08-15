@@ -7,20 +7,24 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="RegistryService" />
+        <module name="ConfigServer" />
         <module name="salary" />
-        <module name="ApiGatewayService" />
+        <module name="RegistryService" />
         <module name="user" />
+        <module name="ApiGateway" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="ApiGatewayService" target="21" />
       <module name="sallery" target="21" />
       <module name="sallery (1)" target="21" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="ApiGateway" options="-parameters" />
       <module name="ApiGatewayService" options="-parameters" />
+      <module name="ConfigServer" options="-parameters" />
       <module name="RegistryService" options="-parameters" />
       <module name="salary" options="-parameters" />
       <module name="sallery" options="-parameters" />

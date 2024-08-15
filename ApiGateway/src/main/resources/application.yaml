@@ -1,0 +1,23 @@
+server:
+  port: 8383
+
+spring:
+  application:
+    name: API-GATEWAY
+  cloud:
+    gateway:
+      routes:
+        - id: USER-SERVICE
+          uri: lb://USER-SERVICE
+          predicates:
+            - Path=/api/v1/employees/**
+
+        - id: SALARY-SERVICE
+          uri: lb://SALARY-SERVICE
+          predicates:
+            - Path=/api/v1/salary/**,/api/v1/leaves/**
+
+logging:
+  level:
+    org.springframework.cloud.gateway: DEBUG
+    org.springframework.web: DEBUG
