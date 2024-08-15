@@ -17,6 +17,13 @@ spring:
           predicates:
             - Path=/api/v1/salary/**,/api/v1/leaves/**
 
+        - id: AUTH-SERVER
+          uri: lb://AUTH-SERVER
+          predicates:
+            - Path=/api/auth/**
+  config:
+    import: configserver:http://localhost:8484
+
 logging:
   level:
     org.springframework.cloud.gateway: DEBUG

@@ -17,12 +17,9 @@ spring:
   application:
     name: SALARY-SERVICE
 
-  cloud:
-    config:
-      server:
-        git:
-          uri: https://github.com/Rajdeep-nagar08/payroll-microservice-config
-          clone-on-start: true
+  config:
+    import: configserver:http://localhost:8484
+
 #eureka:
 #  instance:
 #    prefer-ip-address: true
