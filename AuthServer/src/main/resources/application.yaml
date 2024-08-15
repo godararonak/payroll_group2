@@ -28,6 +28,10 @@ spring:
   config:
     import: configserver:http://localhost:8484
 
+logging:
+  level:
+    org.springframework.cloud.gateway: DEBUG
+    org.springframework.web: DEBUG
       #eureka:
       #  instance:
       #    prefer-ip-address: true
