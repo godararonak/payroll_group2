@@ -7,7 +7,6 @@ import com.example.AuthServer.payload.RegisterDTO;
 import com.example.AuthServer.payload.ResetPasswordDto;
 import com.example.AuthServer.repository.RoleRepository;
 import com.example.AuthServer.repository.UserRepository;
-import com.example.AuthServer.security.JwtTokenProvider;
 import com.example.AuthServer.service.AuthService;
 import com.example.AuthServer.service.EmailService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,10 +35,15 @@ public class AuthServiceImpl implements AuthService {
     @Autowired
     private AuthenticationManager authenticationManager;
     @Autowired
-    private JwtTokenProvider jwtTokenProvider;
+    private JwtService jwtService;
 
     @Autowired
     private EmailService emailService;
+
+    public void validateToken(String token) {
+        jwtService.validateToken(token);
+    }
+
 
     @Override
     public String login(LoginDTO loginDto) {
@@ -61,7 +65,7 @@ public class AuthServiceImpl implements AuthService {
                         loginDto.getUsername(), loginDto.getPassword()
                 ));
         SecurityContextHolder.getContext().setAuthentication(authentication);
-        String token = jwtTokenProvider.generateToken(authentication);
+        String token = jwtService.generateToken(authentication);
         return token;
     }
 
