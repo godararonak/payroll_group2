@@ -67,12 +67,11 @@ import java.util.List;
          }
 
         @DeleteMapping("/delete/{id}")
-        public ResponseEntity<String> deleteEmployee(@PathVariable Long id){
-            boolean isDeleted = userService.deleteEmployee(id);
-            if(isDeleted){
-                return ResponseEntity.status(HttpStatus.OK).body(new String("204" + "Deleted Successfully"));
-            }else{
-                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new String("500" + "Internal Server Error"));
-            }
+        public ResponseEntity<Users> deleteEmployee(@PathVariable Long id){
+
+            Users user = userService.getEmployeeById(id);
+            user.setActive(false);
+            userService.updateUser(id, user);
+            return new ResponseEntity<>(user, HttpStatus.OK);
         }
 }

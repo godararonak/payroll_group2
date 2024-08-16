@@ -1,4 +1,4 @@
-package com.example.user.services.UserImpl;
+package com.example.user.Services.UserImpl;
 import com.example.user.exception.DuplicateResourceException;
 import com.example.user.repository.UserRepo;
 import com.example.user.services.UserService;
@@ -66,20 +66,25 @@ public class UserServiceImpl implements UserService {
         userfound.setRole(user.getRole());
         userfound.setDate_of_birth(user.getDate_of_birth());
         userfound.setTotal_ctc(user.getTotal_ctc());
+        userfound.setActive(user.isActive());
         return userRepo.save(userfound);
     }
 
-    @Override
-    public boolean deleteEmployee(Long employeeId) {
+//    @Override
+//    public boolean deleteEmployee(Long employeeId) {
+//
+//        boolean isDeleted = false;
+//
+//        Users user = userRepo.findById(employeeId).orElseThrow(() -> new ResourceNotFoundException("Employee", "EmployeeId", employeeId.toString()));
+////
+////        if(user != null){
+////            userRepo.deleteById(employeeId);
+////            isDeleted= true;
+////        }
+//
+//        user.
+//
+//    return isDeleted;
+//    }
 
-        boolean isDeleted = false;
-
-        Users user = userRepo.findById(employeeId).orElseThrow(() -> new ResourceNotFoundException("Employee", "EmployeeId", employeeId.toString()));
-
-        if(user != null){
-            userRepo.deleteById(employeeId);
-            isDeleted= true;
-        }
-    return isDeleted;
-    }
 }

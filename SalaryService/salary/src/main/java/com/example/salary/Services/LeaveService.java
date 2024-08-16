@@ -4,6 +4,7 @@ import com.example.salary.Dto.Leave;
 import com.example.salary.Dto.MonthlySalary;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.http.ResponseEntity;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -16,12 +17,17 @@ public interface LeaveService {
 
     Leave updateLeave(Leave leave);
 
-    void changeLeaveStatus(Integer leaveId, String status);
+
+    void changeLeaveStatusToApprove(Integer leaveId);
+
+    void changeLeaveStatusToReject(Integer leaveId);
 
     List<LocalDate> findAllLeavesInMonth(Long employeeId, int month, int year);
 
     List<LocalDate> findAllLeavesBetweenDates(Long employeeId, LocalDate startDate, LocalDate endDate);
 
-    MonthlySalary calculateMonthlySalary(Long employeeId, int month, int year);
+//    MonthlySalary calculateMonthlySalary(Long employeeId, int month, int year);
+
+    ResponseEntity<String> generateSalary(long empId, int month, int year);
 
 }
