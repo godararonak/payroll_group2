@@ -2,6 +2,8 @@ package com.example.salary.Services;
 
 import com.example.salary.Dto.Leave;
 import com.example.salary.Dto.MonthlySalary;
+import com.example.salary.Entity.Leaves;
+import com.example.salary.Entity.SalaryPerMonth;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.http.ResponseEntity;
@@ -13,7 +15,7 @@ import java.util.List;
 @SpringBootApplication
 public interface LeaveService {
 
-    Leave takeLeave(Leave leave);
+    Leaves takeLeave(Leaves leave);
 
     Leave updateLeave(Leave leave);
 
@@ -28,6 +30,9 @@ public interface LeaveService {
 
 //    MonthlySalary calculateMonthlySalary(Long employeeId, int month, int year);
 
-    ResponseEntity<String> generateSalary(long empId, int month, int year);
+    SalaryPerMonth generateSalary(long empId, int month, int year);
 
+    List<Leaves> fetchAllPending();
+
+    List<Leaves> fetchAllLeavesByEmployeeId(Long employeeId);
 }

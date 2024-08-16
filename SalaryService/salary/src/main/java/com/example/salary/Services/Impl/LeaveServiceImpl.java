@@ -11,6 +11,7 @@ import com.example.salary.Repository.LeavesRepo;
 import com.example.salary.Repository.SalaryPerMonthRepo;
 import com.example.salary.Repository.SalaryRepo;
 import com.example.salary.Services.LeaveService;
+import com.netflix.discovery.DiscoveryClient;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
@@ -39,27 +40,33 @@ public class LeaveServiceImpl implements LeaveService {
     @Autowired
     SalaryRepo salaryRepo;
 
+//    @Autowired
+//    RestTemplate restTemplate;
+
 
     String[] montharray ={"","Jan","Feb", "Mar","Apr","May","June","July","Aug","Sept","Oct","Nov","Dec"};
 
     @Override
-    public Leave takeLeave(Leave leave) {
+    public Leaves takeLeave(Leaves leave) {
 
         // verify from user service that employee should exist
 //
         RestTemplate restTemplate = new RestTemplate();
-//        Long empId = leave.getEmployeeId();
+        Long empId = leave.getEmployeeId();
 //
 //        String url = "http://localhost:8080/api/v1/employees/fetchEmployee/" + empId;
 //
 //        ResponseEntity<UserDto> response = restTemplate.getForEntity(url, UserDto.class);
 //
 
-        UserDto userDto1 =  restTemplate.getForObject("http://localhost:8989/api/v1/employees/"+leave.getEmployeeId(),UserDto.class);
 
-        if(userDto1.getId()!=0){
 
+        UserDto userDto1 =  restTemplate.getForObject("http://localhost:8282/api/v1/employees/fetchEmployee/"+leave.getEmployeeId(),UserDto.class);
+
+        if (userDto1.getEmail() == null || userDto1.getEmail().trim().isEmpty()) {
+            throw new ResourceNotFoundException("Employee","Id",empId);
         }
+
 
 //        logger.info("{}",userDto1);
 
@@ -80,7 +87,40 @@ public class LeaveServiceImpl implements LeaveService {
         Leaves leaves = modelMapper.map(leave, Leaves.class);
         leaves.setStatus("Pending");
         leavesRepo.save(leaves);
-        return modelMapper.map(leaves, Leave.class);
+        return leaves;
+                //modelMapper.map(leaves, Leave.class);
+    }
+
+    @Override
+    public List<Leaves> fetchAllPending(){
+
+        List<Leaves> list = leavesRepo.findAll();
+        List<Leaves> pendingList = new ArrayList<>();
+
+        for(Leaves leave: list){
+
+            if(leave.getStatus().equals("Pending")) pendingList.add(leave);
+
+        }
+
+        return pendingList;
+
+    }
+
+    @Override
+   public List<Leaves> fetchAllLeavesByEmployeeId(Long employeeId){
+
+        List<Leaves> list = leavesRepo.findAll();
+        List<Leaves> employeeLeaves = new ArrayList<>();
+
+        for(Leaves leave: list){
+
+            if(leave.getEmployeeId().equals(employeeId)) employeeLeaves.add(leave);
+
+        }
+
+        return employeeLeaves;
+
     }
 
     @Override
@@ -142,9 +182,11 @@ public class LeaveServiceImpl implements LeaveService {
 
         // verify employeeId from employee service
 
-        RestTemplate restTemplate = new RestTemplate();
 
-        String url = "http://localhost:8080/api/v1/employees/fetchEmployee/" + employeeId;
+
+        RestTemplate restTemplate=new RestTemplate();
+
+        String url = "http://localhost:8282/api/v1/employees/fetchEmployee/" + employeeId;
 
         ResponseEntity<UserDto> response = restTemplate.getForEntity(url, UserDto.class);
 
@@ -209,23 +251,27 @@ public class LeaveServiceImpl implements LeaveService {
     }
 
     @Override
-    public ResponseEntity<String> generateSalary(long empId, int month, int year) {
+    public SalaryPerMonth generateSalary(long empId, int month, int year) {
         int leaves = findAllLeavesInMonth(empId, month, year).size();
-
+        SalaryPerMonth salaryPerMonth = new SalaryPerMonth();
         Optional<Salary> salary = salaryRepo.findByemployeeId(empId);
 
         if (salary.isPresent()) {
             Double ctc = salary.get().getTotalCtc();
 
             Double monthly_salary = ((ctc / 12) / 22) * (22 - leaves);
-            SalaryPerMonth salaryPerMonth = new SalaryPerMonth();
+
             salaryPerMonth.setEmployeeId(empId);
             salaryPerMonth.setSalary(monthly_salary);
             salaryPerMonth.setMonth(montharray[month]);
             salaryPerMonth.setYear(year);
             spmRepo.save(salaryPerMonth);
+
+        }else{
+            throw new ResourceNotFoundException("Employee","id",empId);
         }
-            return ResponseEntity.of(Optional.of("Salary updated Successfully."));
+        return salaryPerMonth;
+
     }
 
 

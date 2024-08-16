@@ -1,4 +1,4 @@
-package com.example.user.Services.UserImpl;
+package com.example.user.services.UserImpl;
 import com.example.user.exception.DuplicateResourceException;
 import com.example.user.repository.UserRepo;
 import com.example.user.services.UserService;
