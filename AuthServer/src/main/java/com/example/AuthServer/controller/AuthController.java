@@ -95,7 +95,7 @@ public class AuthController {
 
         helper.setText(content, true);
 
-        mailSender.send(message);
+//        mailSender.send(message);
     }
 
 

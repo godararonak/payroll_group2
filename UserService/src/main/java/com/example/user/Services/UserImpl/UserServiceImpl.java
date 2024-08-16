@@ -65,7 +65,6 @@ public class UserServiceImpl implements UserService {
         userfound.setPhone_Number(user.getPhone_Number());
         userfound.setRole(user.getRole());
         userfound.setDate_of_birth(user.getDate_of_birth());
-        userfound.setTotal_ctc(user.getTotal_ctc());
         return userRepo.save(userfound);
     }
 

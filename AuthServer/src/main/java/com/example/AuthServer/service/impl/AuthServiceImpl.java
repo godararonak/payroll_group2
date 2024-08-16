@@ -1,5 +1,6 @@
 package com.example.AuthServer.service.impl;
 
+import com.example.AuthServer.dto.EmployeeDto;
 import com.example.AuthServer.entity.Role;
 import com.example.AuthServer.entity.User;
 import com.example.AuthServer.payload.LoginDTO;
@@ -10,6 +11,8 @@ import com.example.AuthServer.repository.UserRepository;
 import com.example.AuthServer.service.AuthService;
 import com.example.AuthServer.service.EmailService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -17,6 +20,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import java.time.Instant;
 import java.util.HashSet;
@@ -107,7 +111,29 @@ public class AuthServiceImpl implements AuthService {
         user.setFirstLogin(true);
         userRepository.save(user);
         emailService.sendTemporaryPasswordEmail(user.getUsername(),tempPasswordToMail);
-        return "user registered successfully";
+
+        RestTemplate restTemplate = new RestTemplate();
+
+        // Prepare the DTO for the employee service
+        EmployeeDto employeeDTO = new EmployeeDto();
+        employeeDTO.setF_name(registerDto.getFirstName());
+        employeeDTO.setL_name(registerDto.getLastName());
+        employeeDTO.setEmail(registerDto.getUsername());
+        employeeDTO.setRole(registerDto.getRoleName());
+        employeeDTO.setManager_id(1);
+
+        String url = "http://localhost:8181/api/v1/employees/createEmployee";
+
+        // Make the POST request to the employee service
+        ResponseEntity<String> response = restTemplate.postForEntity(url, employeeDTO, String.class);
+
+        if (response.getStatusCode() == HttpStatus.CREATED) {
+            return "User registered successfully";
+        } else {
+            throw new RuntimeException("Failed to register employee in the employee service");
+        }
+
+        // call above post url of employee service to save that user as employee
     }
 
     @Override

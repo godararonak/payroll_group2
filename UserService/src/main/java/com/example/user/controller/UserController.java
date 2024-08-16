@@ -1,8 +1,10 @@
 package com.example.user.controller;
 
+import com.example.user.dto.UserDto;
 import com.example.user.entity.Users;
 import com.example.user.services.UserService;
 import jakarta.transaction.Transactional;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +20,9 @@ import java.util.List;
 
         @Autowired
         UserService userService;
+
+        @Autowired
+        ModelMapper modelMapper;
 
         @GetMapping("/exist/{id}")
         public ResponseEntity<String> existsById(@PathVariable Long empId){
@@ -54,8 +59,8 @@ import java.util.List;
         }
 
         @PostMapping("/createEmployee")
-        public ResponseEntity<Users> createUsers(@RequestBody Users user){
-            Users users=userService.createEmployee(user);
+        public ResponseEntity<Users> createUsers(@RequestBody UserDto userDto){
+            Users users=userService.createEmployee(modelMapper.map(userDto,Users.class));
             return new ResponseEntity<>(users,HttpStatus.CREATED);
         }
 

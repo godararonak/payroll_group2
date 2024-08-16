@@ -21,7 +21,7 @@ public class EmailServiceImpl implements EmailService {
         message.setText(buildEmailBody(temporaryPassword));
         message.setFrom("payroll@ukg.com");
                 // Send the email
-        mailSender.send(message);
+//        mailSender.send(message);
     }
 
     private String buildEmailBody(String temporaryPassword) {
