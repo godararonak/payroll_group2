@@ -1,5 +1,6 @@
 package com.example.AuthServer;
 
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
@@ -18,6 +19,21 @@ public class AuthServerApplication {
 	public RestTemplate restTemplate(){
 		return new RestTemplate();
 	}
+
+
+//	@Bean
+//	CommandLineRunner run(GMailer gMailer) {
+//		return args -> {
+//			gMailer.sendMail("A new message", """
+//                Dear reader,
+//
+//                Hello world.
+//
+//                Best regards,
+//                myself
+//                """);
+//		};
+//	}
 
 
 }

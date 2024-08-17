@@ -1,4 +1,5 @@
 package com.example.AuthServer.controller;
+import com.example.AuthServer.GMailer;
 import com.example.AuthServer.entity.Role;
 import com.example.AuthServer.entity.User;
 import com.example.AuthServer.payload.LoginDTO;
@@ -70,32 +71,32 @@ public class AuthController {
         }
     }
 
+
+
     @Autowired
-    private JavaMailSender mailSender;
+    GMailer gMailer;
 
     public void sendEmail(String recipientEmail, String link)
             throws MessagingException, UnsupportedEncodingException {
-        MimeMessage message = mailSender.createMimeMessage();
-        MimeMessageHelper helper = new MimeMessageHelper(message);
-
-        helper.setFrom("payroll@ukg.com");
-        helper.setTo(recipientEmail);
 
         String subject = "Here's the link to reset your password";
 
-        String content = "<p>Hello,</p>"
+        String content = "<!DOCTYPE html>"
+                + "<html><body>"
+                + "<p>Hello,</p>"
                 + "<p>You have requested to reset your password.</p>"
                 + "<p>Click the link below to change your password:</p>"
                 + "<p><a href=\"" + link + "\">Change my password</a></p>"
                 + "<br>"
                 + "<p>Ignore this email if you do remember your password, "
-                + "or you have not made the request.</p>";
+                + "or you have not made the request.</p>"
+                + "</body></html>";
 
-        helper.setSubject(subject);
-
-        helper.setText(content, true);
-
-//        mailSender.send(message);
+        try {
+            gMailer.sendMail(subject, content, recipientEmail);
+        }catch (Exception e) {
+            System.err.println("Unable to send mail");
+        }
     }
 
 

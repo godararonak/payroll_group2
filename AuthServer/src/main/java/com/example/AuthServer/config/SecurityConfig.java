@@ -33,7 +33,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests((authorize) ->
                                 authorize
 //                                .anyRequest().permitAll()
-                                        .requestMatchers(HttpMethod.POST,"/api/auth/roles").hasAuthority("admin")
+//                                        .requestMatchers(HttpMethod.POST,"/api/auth/roles").hasAuthority("admin")
                                         .requestMatchers(HttpMethod.PUT, "/api/auth/**").permitAll()
                                         .requestMatchers(HttpMethod.POST, "/api/auth/**").permitAll()
                                         .requestMatchers(HttpMethod.GET,"/api/v1/employees/fetch-all").hasAuthority("admin")

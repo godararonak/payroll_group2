@@ -1,4 +1,5 @@
 package com.example.AuthServer.entity;
+import jakarta.persistence.Entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

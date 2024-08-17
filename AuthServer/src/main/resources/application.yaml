@@ -13,14 +13,14 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
-  mail:
-    host: sandbox.smtp.mailtrap.io
-    port: 587
-    username: 9c0edc607f5541
-    password: 3401eec685664c
-    properties:
-      mail.smtp.auth: true
-      mail.smtp.starttls.enable: true
+#  mail:
+#    host: sandbox.smtp.mailtrap.io
+#    port: 587
+#    username: 9c0edc607f5541
+#    password: 3401eec685664c
+#    properties:
+#      mail.smtp.auth: true
+#      mail.smtp.starttls.enable: true
 
   application:
     name: AUTH-SERVER
