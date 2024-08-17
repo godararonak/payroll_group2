@@ -8,6 +8,7 @@ import com.example.salary.ExceptionHandling.ResourceNotFoundException;
 import com.example.salary.Repository.LeavesRepo;
 import com.example.salary.Repository.SalaryRepo;
 import com.example.salary.Services.SalaryService;
+import com.netflix.discovery.DiscoveryClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -33,18 +34,24 @@ public class SalaryServiceImpl implements SalaryService {
     @Autowired
     LeavesRepo leavesRepo;
 
+
     @Override
     public Salary saveSalary(Salary salary) {
 
         // verify that employee present in DB from user service
-        RestTemplate restTemplate = new RestTemplate();
+//        RestTemplate restTemplate = new RestTemplate();
 
         Long empId = salary.getEmployeeId();
 
         Optional<Salary> existingSalary = salaryRepo.findByemployeeId(salary.getEmployeeId());
 
-        String url = "http://localhost:8484/api/v1/employees/fetchEmployee/" + empId;
+        String url = "http://localhost:8282/api/v1/employees/fetchEmployee/" + empId;
 
+//        discoveryClient.getInstancesb
+
+//        Users userfound = userRepo.findById(id).orElseThrow(() -> new ResourceNotFoundException("Employee ", "Employee_Id" , id.toString()));
+
+        RestTemplate restTemplate=new RestTemplate();
         ResponseEntity<UserDto> response = restTemplate.getForEntity(url, UserDto.class);
         UserDto userdto = response.getBody();
         Long t = userdto.getId();
@@ -65,9 +72,11 @@ public class SalaryServiceImpl implements SalaryService {
     @Override
     public Salary updateSalary(Long employeeId,Salary salary) {
 
+        RestTemplate restTemplate=new RestTemplate();
+
         // verify employee from user service
-        RestTemplate restTemplate = new RestTemplate();
-        String url = "http://localhost:8484/api/v1/employees/fetchEmployee/" + employeeId;
+//        RestTemplate restTemplate = new RestTemplate();
+        String url = "http://localhost:8282/api/v1/employees/fetchEmployee/" + employeeId;
 
         ResponseEntity<UserDto> response = restTemplate.getForEntity(url, UserDto.class);
 

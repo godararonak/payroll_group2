@@ -15,8 +15,6 @@ import java.time.LocalDate;
 @Entity
 @Table(name = "employee")
 @NoArgsConstructor
-@Getter
-@Setter
 @Data
 
 public class Users {
@@ -60,5 +58,8 @@ public class Users {
     private String address;
 
     private String about;
+
+    @Column(name = "isActive", nullable = false, columnDefinition = "boolean default true")
+    private boolean isActive = true;
 
 }
