@@ -61,7 +61,7 @@ public class LeaveServiceImpl implements LeaveService {
 
 
 
-        UserDto userDto1 =  restTemplate.getForObject("http://localhost:8282/api/v1/employees/fetchEmployee/"+leave.getEmployeeId(),UserDto.class);
+        UserDto userDto1 =  restTemplate.getForObject("http://localhost:8181/api/v1/employees/fetchEmployee/"+leave.getEmployeeId(),UserDto.class);
 
         if (userDto1.getEmail() == null || userDto1.getEmail().trim().isEmpty()) {
             throw new ResourceNotFoundException("Employee","Id",empId);
@@ -186,7 +186,7 @@ public class LeaveServiceImpl implements LeaveService {
 
         RestTemplate restTemplate=new RestTemplate();
 
-        String url = "http://localhost:8282/api/v1/employees/fetchEmployee/" + employeeId;
+        String url = "http://localhost:8181/api/v1/employees/fetchEmployee/" + employeeId;
 
         ResponseEntity<UserDto> response = restTemplate.getForEntity(url, UserDto.class);
 

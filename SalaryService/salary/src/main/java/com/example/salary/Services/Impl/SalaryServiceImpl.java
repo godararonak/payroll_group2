@@ -76,7 +76,7 @@ public class SalaryServiceImpl implements SalaryService {
 
         // verify employee from user service
 //        RestTemplate restTemplate = new RestTemplate();
-        String url = "http://localhost:8282/api/v1/employees/fetchEmployee/" + employeeId;
+        String url = "http://localhost:8181/api/v1/employees/fetchEmployee/" + employeeId;
 
         ResponseEntity<UserDto> response = restTemplate.getForEntity(url, UserDto.class);
 

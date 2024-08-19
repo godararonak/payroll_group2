@@ -3,6 +3,7 @@ package com.example.salary.Controller;
 
 import com.example.salary.Dto.Leave;
 import com.example.salary.Dto.MonthlySalary;
+import com.example.salary.Dto.ResponseDto;
 import com.example.salary.Entity.Leaves;
 import com.example.salary.Entity.SalaryPerMonth;
 import com.example.salary.ExceptionHandling.InvalidQueryParameterException;
@@ -26,17 +27,25 @@ public class LeavesController {
 
     // Endpoint for taking leave
     @PostMapping("/take")
-    public ResponseEntity<Leaves> takeLeave(@RequestBody Leaves leave) {
-        Leaves savedLeave = leaveService.takeLeave(leave);
-        return new ResponseEntity<>(savedLeave, HttpStatus.CREATED);
+    public ResponseEntity<Object> takeLeave(@RequestBody Leaves leave) {
+        try {
+            Leaves savedLeave = leaveService.takeLeave(leave);
+            return new ResponseEntity<>(savedLeave, HttpStatus.CREATED);
+        }catch (Exception e){
+            return new ResponseEntity<>(new ResponseDto(e.getMessage()),HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @GetMapping("/fetchAllPending")
-    public ResponseEntity<List<Leaves>> fetchAllLeaves(){
+    public ResponseEntity<Object> fetchAllLeaves(){
         // FOR ADMIN
-        List<Leaves> leavesList = leaveService.fetchAllPending();
+        try {
+            List<Leaves> leavesList = leaveService.fetchAllPending();
 
-        return new ResponseEntity<>(leavesList, HttpStatus.CREATED);
+            return new ResponseEntity<>(leavesList, HttpStatus.CREATED);
+        }catch (Exception e){
+            return new ResponseEntity<>(new ResponseDto(e.getMessage()),HttpStatus.INTERNAL_SERVER_ERROR);
+        }
 
     }
 
@@ -53,59 +62,84 @@ public class LeavesController {
 //    uses @PutMapping to replace or update the entire leave object.
 
     @PatchMapping("/status/approve/{leaveId}")
-    public ResponseEntity<Void> changeLeaveStatusToApprove(@PathVariable Integer leaveId) {
-        leaveService.changeLeaveStatusToApprove(leaveId);
-        return ResponseEntity.ok().build();
+    public ResponseEntity<Object> changeLeaveStatusToApprove(@PathVariable Integer leaveId) {
+        try {
+            leaveService.changeLeaveStatusToApprove(leaveId);
+            return new ResponseEntity<>(new ResponseDto("Leave Approved"),HttpStatus.CREATED);
+        }catch (Exception e){
+            return new ResponseEntity<>(new ResponseDto(e.getMessage()),HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @PatchMapping("/status/reject/{leaveId}")
-    public ResponseEntity<Void> changeLeaveStatusToReject(@PathVariable Integer leaveId) {
-        leaveService.changeLeaveStatusToReject(leaveId);
-        return ResponseEntity.ok().build();
+    public ResponseEntity<Object> changeLeaveStatusToReject(@PathVariable Integer leaveId) {
+        try {
+            leaveService.changeLeaveStatusToReject(leaveId);
+            return new ResponseEntity<>(new ResponseDto("Leave Rejected"),HttpStatus.OK);
+
+        }catch (Exception e){
+            return new ResponseEntity<>(new ResponseDto(e.getMessage()),HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     // Endpoint for finding all leaves in a month
     @GetMapping("/month")
-    public ResponseEntity<List<LocalDate>> findAllLeavesInMonth(
+    public ResponseEntity<Object> findAllLeavesInMonth(
             @RequestParam Long employeeId,
             @RequestParam int month,
             @RequestParam int year) {
 
-        if(employeeId ==0 || month ==0 || year == 0) throw new InvalidQueryParameterException();
+        try {
+            if (employeeId == 0 || month == 0 || year == 0) throw new InvalidQueryParameterException();
 
-        List<LocalDate> leaves = leaveService.findAllLeavesInMonth(employeeId, month, year);
-        return new ResponseEntity<>(leaves,HttpStatus.OK);
+            List<LocalDate> leaves = leaveService.findAllLeavesInMonth(employeeId, month, year);
+            return new ResponseEntity<>(leaves, HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity<>(new ResponseDto(e.getMessage()),HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @GetMapping("/{employeeId}")
-    public ResponseEntity<List<Leaves>> findLeavesByEmployeeId(@PathVariable Long employeeId){
+    public ResponseEntity<Object> findLeavesByEmployeeId(@PathVariable Long employeeId){
 
-        List<Leaves> list = leaveService.fetchAllLeavesByEmployeeId(employeeId);
+        try {
+            List<Leaves> list = leaveService.fetchAllLeavesByEmployeeId(employeeId);
 
-        return new ResponseEntity<>(list,HttpStatus.OK);
+            return new ResponseEntity<>(list, HttpStatus.OK);
+        }catch(Exception e){
+            return new ResponseEntity<>(new ResponseDto(e.getMessage()),HttpStatus.INTERNAL_SERVER_ERROR);
+        }
 
     }
 
 
     // Endpoint for finding all leaves between two dates
     @GetMapping("/betweenDates")
-    public ResponseEntity<List<LocalDate>> findAllLeavesBetweenDates(
+    public ResponseEntity<Object> findAllLeavesBetweenDates(
             @RequestParam Long employeeId,
             @RequestParam LocalDate startDate,
             @RequestParam LocalDate endDate) {
-        List<LocalDate> leaves = leaveService.findAllLeavesBetweenDates(employeeId, startDate, endDate);
-        return new ResponseEntity<>(leaves,HttpStatus.OK);
+        try {
+            List<LocalDate> leaves = leaveService.findAllLeavesBetweenDates(employeeId, startDate, endDate);
+            return new ResponseEntity<>(leaves, HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity<>(new ResponseDto(e.getMessage()),HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
 
     // Endpoint for calculating monthly salary
     @GetMapping("/salary")
-    public ResponseEntity<SalaryPerMonth> calculateMonthlySalary(
+    public ResponseEntity<Object> calculateMonthlySalary(
             @RequestParam Long employeeId,
             @RequestParam int month,
             @RequestParam int year) {
-        SalaryPerMonth monthlySalary = leaveService.generateSalary(employeeId, month, year);
-        return new ResponseEntity<>(monthlySalary,HttpStatus.OK);
+        try {
+            SalaryPerMonth monthlySalary = leaveService.generateSalary(employeeId, month, year);
+            return new ResponseEntity<>(monthlySalary, HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity<>(new ResponseDto(e.getMessage()),HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
 }
