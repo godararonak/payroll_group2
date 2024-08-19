@@ -13,6 +13,8 @@
         <option value="$PROJECT_DIR$/ApiGatewayService/pom.xml" />
         <option value="$PROJECT_DIR$/ApiGateway/pom.xml" />
         <option value="$PROJECT_DIR$/ConfigServer/pom.xml" />
+        <option value="$PROJECT_DIR$/AuthServer/pom.xml" />
+        <option value="$PROJECT_DIR$/EmployeeServce/pom.xml" />
       </list>
     </option>
     <option name="ignoredFiles">

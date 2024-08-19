@@ -16,7 +16,7 @@ public class SalaryController {
   @Autowired
     SalaryService salaryService;
 
-    @PostMapping("/{id}")
+    @PostMapping("/create/{id}")
     public ResponseEntity<Salary> createSalary(@RequestBody Salary salary) {
         Salary createdSalary = salaryService.saveSalary(salary);
         return new ResponseEntity<>(createdSalary, HttpStatus.CREATED);

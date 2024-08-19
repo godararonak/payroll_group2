@@ -11,11 +11,24 @@ spring:
           uri: lb://USER-SERVICE
           predicates:
             - Path=/api/v1/employees/**
+          filters:
+            - AuthenticationFilter
 
         - id: SALARY-SERVICE
           uri: lb://SALARY-SERVICE
           predicates:
             - Path=/api/v1/salary/**,/api/v1/leaves/**
+          filters:
+            - AuthenticationFilter
+
+        - id: AUTH-SERVER
+          uri: lb://AUTH-SERVER
+          predicates:
+            - Path=/api/auth/**
+          filters:
+            - AuthenticationFilter
+  config:
+    import: configserver:http://localhost:8484
 
 logging:
   level:
