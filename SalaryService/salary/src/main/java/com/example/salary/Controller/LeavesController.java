@@ -16,6 +16,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
+@CrossOrigin
 @RestController
 @RequestMapping("/api/v1/leaves")
 public class LeavesController {
@@ -64,7 +65,7 @@ public class LeavesController {
     }
 
     // Endpoint for finding all leaves in a month
-    @GetMapping("/leaves")
+    @GetMapping("/month")
     public ResponseEntity<List<LocalDate>> findAllLeavesInMonth(
             @RequestParam Long employeeId,
             @RequestParam int month,
@@ -76,7 +77,7 @@ public class LeavesController {
         return new ResponseEntity<>(leaves,HttpStatus.OK);
     }
 
-    @GetMapping("/leaves/{employeeId}")
+    @GetMapping("/{employeeId}")
     public ResponseEntity<List<Leaves>> findLeavesByEmployeeId(@PathVariable Long employeeId){
 
         List<Leaves> list = leaveService.fetchAllLeavesByEmployeeId(employeeId);

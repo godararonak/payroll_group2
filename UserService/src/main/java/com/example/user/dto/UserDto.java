@@ -21,13 +21,15 @@ public class UserDto {
 
     private String email;
 
-    private String phone_number;
+    private String phone_Number;
 
     private String role;
 
-    private long manager_id;
+    private long Manager_Id;
 
-    private double total_ctc;
+    private String address;
+
+    private String about;
 
     private String password;
 

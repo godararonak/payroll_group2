@@ -45,7 +45,7 @@ public class SalaryServiceImpl implements SalaryService {
 
         Optional<Salary> existingSalary = salaryRepo.findByemployeeId(salary.getEmployeeId());
 
-        String url = "http://localhost:8282/api/v1/employees/fetchEmployee/" + empId;
+        String url = "http://USER-SERVICE/api/v1/employees/fetchEmployee/" + empId;
 
 //        discoveryClient.getInstancesb
 
