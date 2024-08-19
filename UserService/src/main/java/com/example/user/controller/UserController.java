@@ -29,8 +29,7 @@ import java.util.List;
         }else{
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User does not exist");
         }
-
-        }
+}
 
         @GetMapping("/ping")
         public ResponseEntity<String> Ping() {
