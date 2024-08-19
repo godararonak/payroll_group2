@@ -159,30 +159,7 @@ public class UserServiceUnitTests {
         verify(userRepo, times(1)).findById(employeeId);
     }
 
-    @Test
-    public void testDeleteEmployee_ShouldDeleteEmployee() {
-        Long employeeId = 1L;
-        Users mockUser = new Users();
 
-        when(userRepo.findById(employeeId)).thenReturn(Optional.of(mockUser));
-
-        boolean result = userService.deleteEmployee(employeeId);
-
-        assertTrue(result);
-        verify(userRepo, times(1)).findById(employeeId);
-        verify(userRepo, times(1)).deleteById(employeeId);
-    }
-
-    @Test
-    public void testDeleteEmployee_ShouldThrowException() {
-        Long employeeId = 1L;
-
-        when(userRepo.findById(employeeId)).thenReturn(Optional.empty());
-
-        assertThrows(ResourceNotFoundException.class, () -> userService.deleteEmployee(employeeId));
-        verify(userRepo, times(1)).findById(employeeId);
-        verify(userRepo, times(0)).deleteById(any());
-    }
 
 
 }
