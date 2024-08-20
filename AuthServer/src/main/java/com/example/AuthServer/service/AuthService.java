@@ -15,7 +15,7 @@ public interface AuthService {
     JWTDto login(LoginDTO loginDto);
     ResponseDto register(RegisterDTO registerDto);
     ResponseDto resetPassword(ResetPasswordDto resetPasswordDto);
-    String forgotPassword(ResetPasswordDto resetPasswordDto);
+    void forgotPassword(ResetPasswordDto resetPasswordDto);
     void updateResetPasswordToken(String token, String email);
     User getByResetPasswordToken(String token);
     Role createRole(Role role);

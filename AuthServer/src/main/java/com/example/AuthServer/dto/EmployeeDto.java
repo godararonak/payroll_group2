@@ -1,15 +1,15 @@
 package com.example.AuthServer.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 
 @NoArgsConstructor
+@AllArgsConstructor
 @Data
 public class EmployeeDto {
-
-    private long id;
 
     private String f_name;
 
@@ -19,7 +19,7 @@ public class EmployeeDto {
 
     private String role;
 
-    private long manager_id;
+    private long Manager_Id;
 
 
 }

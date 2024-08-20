@@ -90,8 +90,7 @@ public class AuthServiceImpl implements AuthService {
 
         // add check for username exists in database
         if(userRepository.existsByUsername(registerDto.getUsername())){
-            responseDto.setResponse("Username already exist");
-            return responseDto;
+            throw new RuntimeException("Username already exist");
         }
 
         // add check for email exists in database
@@ -133,7 +132,7 @@ public class AuthServiceImpl implements AuthService {
         employeeDTO.setL_name(registerDto.getLastName());
         employeeDTO.setEmail(registerDto.getUsername());
         employeeDTO.setRole(registerDto.getRoleName());
-        employeeDTO.setManager_id(1);
+        employeeDTO.setManager_Id(1);
 
         String url = "http://localhost:8181/api/v1/employees/createEmployee";
 
@@ -141,11 +140,10 @@ public class AuthServiceImpl implements AuthService {
         ResponseEntity<String> response = restTemplate.postForEntity(url, employeeDTO, String.class);
 
         if (response.getStatusCode() == HttpStatus.CREATED) {
-            responseDto.setResponse("User registered successfully");
+            throw new RuntimeException("User registered successfully");
         } else {
-            responseDto.setResponse("Failed to register employee in the employee service");
+            throw new RuntimeException("Failed to register employee in the employee service");
         }
-        return responseDto;
         // call above post url of employee service to save that user as employee
     }
 
@@ -175,7 +173,7 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
-    public String forgotPassword(ResetPasswordDto resetPasswordDto) {
+    public void forgotPassword(ResetPasswordDto resetPasswordDto) {
         String password=resetPasswordDto.getNewPassword();
         String conformPassword=resetPasswordDto.getConformPassword();
         if(!password.equals(conformPassword)){
@@ -195,7 +193,6 @@ public class AuthServiceImpl implements AuthService {
         user.setPassword(encodedPassword);
         user.setResetPasswordToken(null);
         userRepository.save(user);
-        return "";
     }
 
     @Override
