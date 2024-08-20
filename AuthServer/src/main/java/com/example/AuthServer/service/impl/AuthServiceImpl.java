@@ -1,5 +1,8 @@
 package com.example.AuthServer.service.impl;
 
+import com.example.AuthServer.dto.EmployeeDto;
+import com.example.AuthServer.dto.JWTDto;
+import com.example.AuthServer.dto.ResponseDto;
 import com.example.AuthServer.entity.Role;
 import com.example.AuthServer.entity.User;
 import com.example.AuthServer.payload.LoginDTO;
@@ -7,9 +10,12 @@ import com.example.AuthServer.payload.RegisterDTO;
 import com.example.AuthServer.payload.ResetPasswordDto;
 import com.example.AuthServer.repository.RoleRepository;
 import com.example.AuthServer.repository.UserRepository;
+import com.example.AuthServer.security.JwtTokenProvider;
 import com.example.AuthServer.service.AuthService;
 import com.example.AuthServer.service.EmailService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -17,6 +23,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import java.time.Instant;
 import java.util.HashSet;
@@ -34,29 +41,28 @@ public class AuthServiceImpl implements AuthService {
     private RoleRepository roleRepository;
     @Autowired
     private AuthenticationManager authenticationManager;
+
     @Autowired
-    private JwtService jwtService;
+    private JwtTokenProvider jwtTokenProvider;
 
     @Autowired
     private EmailService emailService;
 
-    public void validateToken(String token) {
-        jwtService.validateToken(token);
-    }
-
 
     @Override
-    public String login(LoginDTO loginDto) {
+    public JWTDto login(LoginDTO loginDto) {
         // if login using one time accessible password :-
         String pwd=loginDto.getPassword();
         if(userRepository.existsByUsername(loginDto.getUsername())){
             User user=userRepository.findByUsername(loginDto.getUsername()).get();
-                String otp=user.getId()+user.getFirstName().toLowerCase()+user.getLastName().toLowerCase();
-                if(otp.equals(pwd) && user.isFirstLogin()){
-                    user.setFirstLogin(false);
+                String tempPwd=user.getId()+user.getFirstName().toLowerCase()+user.getLastName().toLowerCase();
+                if(tempPwd.equals(pwd) && user.isFirstLogin()){
+//                    user.setFirstLogin(false);
                     userRepository.save(user);
-                    return "First time login";
+                    JWTDto jwtDto=new JWTDto();
+                    jwtDto.setFirstLogin(true);
                     // forward user to reset password page
+                    return jwtDto;
             }
         }
 
@@ -65,16 +71,27 @@ public class AuthServiceImpl implements AuthService {
                         loginDto.getUsername(), loginDto.getPassword()
                 ));
         SecurityContextHolder.getContext().setAuthentication(authentication);
-        String token = jwtService.generateToken(authentication);
-        return token;
+        String token = jwtTokenProvider.generateToken(authentication);
+        User user = userRepository.findByUsername(loginDto.getUsername()).get();
+        Set<Role> roles = user.getRoles();
+        roles=user.getRoles();
+        String role = roles.iterator().next().getName();
+        JWTDto jwtDto= new JWTDto();
+        jwtDto.setJwt(token);
+        jwtDto.setRole(role);
+        jwtDto.setFirstLogin(false);
+        jwtDto.setUserId(202L);
+        return jwtDto;
     }
 
     @Override
-    public String register(RegisterDTO registerDto) {
+    public ResponseDto register(RegisterDTO registerDto) {
+
+        ResponseDto responseDto=new ResponseDto();
 
         // add check for username exists in database
         if(userRepository.existsByUsername(registerDto.getUsername())){
-            throw new RuntimeException("username is already exists");
+            throw new RuntimeException("Username already exist");
         }
 
         // add check for email exists in database
@@ -107,11 +124,32 @@ public class AuthServiceImpl implements AuthService {
         user.setFirstLogin(true);
         userRepository.save(user);
         emailService.sendTemporaryPasswordEmail(user.getUsername(),tempPasswordToMail);
-        return "user registered successfully";
+
+        RestTemplate restTemplate = new RestTemplate();
+
+        // Prepare the DTO for the employee service
+        EmployeeDto employeeDTO = new EmployeeDto();
+        employeeDTO.setF_name(registerDto.getFirstName());
+        employeeDTO.setL_name(registerDto.getLastName());
+        employeeDTO.setEmail(registerDto.getUsername());
+        employeeDTO.setRole(registerDto.getRoleName());
+        employeeDTO.setManager_Id(1);
+
+        String url = "http://localhost:8181/api/v1/employees/createEmployee";
+
+        // Make the POST request to the employee service
+        ResponseEntity<String> response = restTemplate.postForEntity(url, employeeDTO, String.class);
+
+        if (response.getStatusCode() == HttpStatus.CREATED) {
+            return new ResponseDto("User registered successfully");
+        } else {
+            throw new RuntimeException("Failed to register employee in the employee service");
+        }
+        // call above post url of employee service to save that user as employee
     }
 
     @Override
-    public String resetPassword(ResetPasswordDto resetPasswordDto) {
+    public ResponseDto resetPassword(ResetPasswordDto resetPasswordDto) {
         String password=resetPasswordDto.getNewPassword();
         String conformPassword=resetPasswordDto.getConformPassword();
         if(!password.equals(conformPassword)){
@@ -127,13 +165,16 @@ public class AuthServiceImpl implements AuthService {
 
         User user=userRepository.findByUsername(resetPasswordDto.getUsername()).get();
         user.setPassword(passwordEncoder.encode(resetPasswordDto.getConformPassword()));
+        user.setFirstLogin(false);
         userRepository.save(user);
-        return "Password reset done";
+        ResponseDto responseDto=new ResponseDto();
+        responseDto.setResponse("Password reset done");
+        return responseDto;
         // forward user to login page;
     }
 
     @Override
-    public String forgotPassword(ResetPasswordDto resetPasswordDto) {
+    public void forgotPassword(ResetPasswordDto resetPasswordDto) {
         String password=resetPasswordDto.getNewPassword();
         String conformPassword=resetPasswordDto.getConformPassword();
         if(!password.equals(conformPassword)){
@@ -153,7 +194,6 @@ public class AuthServiceImpl implements AuthService {
         user.setPassword(encodedPassword);
         user.setResetPasswordToken(null);
         userRepository.save(user);
-        return "";
     }
 
     @Override

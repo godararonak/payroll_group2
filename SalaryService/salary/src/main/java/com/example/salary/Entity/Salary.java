@@ -25,16 +25,16 @@ public class Salary {
     @Column(name = "employee_id", nullable = false)
     private Long employeeId;
 
-    @Column(name = "basic", precision = 10, scale = 2)
-    private BigDecimal basic;
+    @Column(name = "basic", nullable = false)
+    private Double basic;
 
-    @Column(name = "hra", precision = 10, scale = 2)
-    private BigDecimal hra;
+    @Column(name = "hra", nullable = false)
+    private Double hra;
 
-    @Column(name = "allowance", precision = 10, scale = 2)
-    private BigDecimal allowance;
+    @Column(name = "allowance", nullable = false)
+    private Double allowance;
 
-    @Column(name = "total_ctc", precision = 10, scale = 2)
-    private BigDecimal totalCtc;
+    @Column(name = "total_ctc", nullable = false)
+    private Double totalCtc;
 
 }

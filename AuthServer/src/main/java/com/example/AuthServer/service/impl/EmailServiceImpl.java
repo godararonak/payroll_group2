@@ -1,6 +1,9 @@
 package com.example.AuthServer.service.impl;
 
+import com.example.AuthServer.GMailer;
 import com.example.AuthServer.service.EmailService;
+import com.google.api.client.googleapis.json.GoogleJsonError;
+import com.google.api.client.googleapis.json.GoogleJsonResponseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -10,18 +13,17 @@ import org.springframework.stereotype.Service;
 public class EmailServiceImpl implements EmailService {
 
     @Autowired
-    private JavaMailSender mailSender;
+    GMailer gMailer;
 
     @Override
     public void sendTemporaryPasswordEmail(String to, String temporaryPassword) {
-
-        SimpleMailMessage message = new SimpleMailMessage();
-        message.setTo(to);
-        message.setSubject("Your Temporary Password");
-        message.setText(buildEmailBody(temporaryPassword));
-        message.setFrom("payroll@ukg.com");
-                // Send the email
-        mailSender.send(message);
+        String subject="Your Temporary Password";
+        String message=buildEmailBody(temporaryPassword);
+        try {
+            gMailer.sendMail(subject, message, to);
+        }catch (Exception e) {
+                System.err.println("Unable to send mail");
+        }
     }
 
     private String buildEmailBody(String temporaryPassword) {
