@@ -1,11 +1,12 @@
+
 server:
   port: 8282
 
 spring:
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5432/user
-    username: postgres
+    url: jdbc:postgresql://localhost:5432/mydatabase
+    username: root
     password: root
   jpa:
     hibernate:
@@ -19,6 +20,12 @@ spring:
 
   config:
     import: configserver:http://localhost:8484
+
+  eureka:
+    client:
+      serviceUrl:
+        defaultZone: http://registrycontainer:8761/eureka/
+
 
 #
 #eureka:
