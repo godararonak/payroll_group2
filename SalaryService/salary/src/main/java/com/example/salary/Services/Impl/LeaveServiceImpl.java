@@ -250,7 +250,7 @@ public class LeaveServiceImpl implements LeaveService {
     }
 
     @Override
-    public SalaryPerMonth generateSalary(long empId, int month, int year) {
+    public SalaryPerMonth generateSalary(Long empId, int month, int year) {
         int leaves = findAllLeavesInMonth(empId, month, year).size();
         SalaryPerMonth salaryPerMonth = new SalaryPerMonth();
         Optional<Salary> salary = salaryRepo.findByemployeeId(empId);

@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 @NoArgsConstructor
 public class CalculateMonthlySalaryDto {
 
-    Long employeeId;
-    int month;
-    int year;
+    private Long employeeId;
+    private int month;
+    private int year;
 }

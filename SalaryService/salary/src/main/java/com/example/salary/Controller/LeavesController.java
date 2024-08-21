@@ -132,7 +132,7 @@ public class LeavesController {
     // Endpoint for calculating monthly salary
     @GetMapping("/salary")
     public ResponseEntity<Object> calculateMonthlySalary(
-            CalculateMonthlySalaryDto calculateMonthlySalaryDto) {
+            @RequestBody CalculateMonthlySalaryDto calculateMonthlySalaryDto) {
         try {
             SalaryPerMonth monthlySalary = leaveService.generateSalary(calculateMonthlySalaryDto.getEmployeeId(),calculateMonthlySalaryDto.getMonth(),calculateMonthlySalaryDto.getYear());
             return new ResponseEntity<>(monthlySalary, HttpStatus.OK);

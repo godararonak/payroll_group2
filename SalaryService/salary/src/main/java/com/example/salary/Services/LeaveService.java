@@ -30,7 +30,7 @@ public interface LeaveService {
 
 //    MonthlySalary calculateMonthlySalary(Long employeeId, int month, int year);
 
-    SalaryPerMonth generateSalary(long empId, int month, int year);
+    SalaryPerMonth generateSalary(Long empId, int month, int year);
 
     List<Leaves> fetchAllPending();
 
