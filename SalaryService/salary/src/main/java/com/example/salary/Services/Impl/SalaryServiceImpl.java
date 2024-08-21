@@ -8,7 +8,6 @@ import com.example.salary.ExceptionHandling.ResourceNotFoundException;
 import com.example.salary.Repository.LeavesRepo;
 import com.example.salary.Repository.SalaryRepo;
 import com.example.salary.Services.SalaryService;
-import com.netflix.discovery.DiscoveryClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -35,9 +34,6 @@ public class SalaryServiceImpl implements SalaryService {
     LeavesRepo leavesRepo;
 
 
-    @Autowired
-    private DiscoveryClient discoveryClient;
-
     @Override
     public Salary saveSalary(Salary salary) {
 
@@ -49,8 +45,6 @@ public class SalaryServiceImpl implements SalaryService {
         Optional<Salary> existingSalary = salaryRepo.findByemployeeId(salary.getEmployeeId());
 
         String url = "http://localhost:8282/api/v1/employees/fetchEmployee/" + empId;
-
-//        discoveryClient.getInstancesb
 
 //        Users userfound = userRepo.findById(id).orElseThrow(() -> new ResourceNotFoundException("Employee ", "Employee_Id" , id.toString()));
 

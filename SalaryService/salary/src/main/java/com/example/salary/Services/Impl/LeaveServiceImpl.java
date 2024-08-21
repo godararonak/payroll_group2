@@ -11,7 +11,6 @@ import com.example.salary.Repository.LeavesRepo;
 import com.example.salary.Repository.SalaryPerMonthRepo;
 import com.example.salary.Repository.SalaryRepo;
 import com.example.salary.Services.LeaveService;
-import com.netflix.discovery.DiscoveryClient;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
