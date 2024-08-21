@@ -21,5 +21,5 @@ public interface SalaryService {
    AllEmployeeSalary getAllSalary(Integer pgNo, Integer pgSize, String sortBy, String sortDir);
    List<SalaryPerMonth>  getAllPerMonth();
 
-   SalaryPerMonth getSalaryPerMonth(Long employeeId);
+   List<SalaryPerMonth> getSalaryPerMonth(Long employeeId);
 }

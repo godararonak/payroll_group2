@@ -72,7 +72,7 @@ public class SalaryController {
     @GetMapping("fetchPerMonth/{employeeId}")
     public ResponseEntity<Object> getSalaryPerMonth(@PathVariable Long employeeId) {
         try {
-            SalaryPerMonth salary = salaryService.getSalaryPerMonth(employeeId);
+            List<SalaryPerMonth> salary = salaryService.getSalaryPerMonth(employeeId);
             return new ResponseEntity<>(salary, HttpStatus.OK);
         }catch (Exception e){
             return new ResponseEntity<>(new ResponseDto(e.getMessage()),HttpStatus.INTERNAL_SERVER_ERROR);

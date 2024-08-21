@@ -96,7 +96,7 @@ import java.util.List;
             }catch (Exception e){
                 return new ResponseEntity<>(new ResponseDto(e.getMessage()),HttpStatus.INTERNAL_SERVER_ERROR);
             }
-         }
+        }
 
         @DeleteMapping("/delete/{id}")
         public ResponseEntity<Object> deleteEmployee(@PathVariable Long id){

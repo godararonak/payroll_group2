@@ -1,9 +1,6 @@
 package com.example.AuthServer.service.impl;
 
-import com.example.AuthServer.dto.EmployeeDto;
-import com.example.AuthServer.dto.JWTDto;
-import com.example.AuthServer.dto.ResponseDto;
-import com.example.AuthServer.dto.UserDto;
+import com.example.AuthServer.dto.*;
 import com.example.AuthServer.entity.Role;
 import com.example.AuthServer.entity.User;
 import com.example.AuthServer.payload.LoginDTO;
@@ -89,7 +86,7 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
-    public ResponseDto register(RegisterDTO registerDto) {
+    public Object register(RegisterDTO registerDto) {
 
         ResponseDto responseDto=new ResponseDto();
 
@@ -142,10 +139,17 @@ public class AuthServiceImpl implements AuthService {
         String url = "http://localhost:8181/api/v1/employees/createEmployee";
 
         // Make the POST request to the employee service
-        ResponseEntity<String> response = restTemplate.postForEntity(url, employeeDTO, String.class);
+        ResponseEntity<UserDto> response = restTemplate.postForEntity(url, employeeDTO, UserDto.class);
 
+        Long userId= response.getBody().getId();
+
+        System.out.println(response);
+
+        RegistorResponseDto registorResponseDto=new RegistorResponseDto();
         if (response.getStatusCode() == HttpStatus.CREATED) {
-            return new ResponseDto("User registered successfully");
+            registorResponseDto.setResponse("User registered successfully");
+            registorResponseDto.setUserId(userId);
+            return registorResponseDto;
         } else {
             throw new RuntimeException("Failed to register employee in the employee service");
         }

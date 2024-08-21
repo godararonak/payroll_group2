@@ -13,7 +13,7 @@ import java.util.List;
 
 public interface AuthService {
     JWTDto login(LoginDTO loginDto);
-    ResponseDto register(RegisterDTO registerDto);
+    Object register(RegisterDTO registerDto);
     ResponseDto resetPassword(ResetPasswordDto resetPasswordDto);
     void forgotPassword(ResetPasswordDto resetPasswordDto);
     void updateResetPasswordToken(String token, String email);

@@ -130,7 +130,7 @@ public class LeavesController {
 
 
     // Endpoint for calculating monthly salary
-    @GetMapping("/salary")
+    @PostMapping("/salary/generate")
     public ResponseEntity<Object> calculateMonthlySalary(
             @RequestBody CalculateMonthlySalaryDto calculateMonthlySalaryDto) {
         try {

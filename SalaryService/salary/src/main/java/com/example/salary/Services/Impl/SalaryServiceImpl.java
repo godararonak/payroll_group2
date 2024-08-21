@@ -152,8 +152,8 @@ public class SalaryServiceImpl implements SalaryService {
     }
 
     @Override
-    public SalaryPerMonth getSalaryPerMonth(Long employeeId) {
-        Optional<SalaryPerMonth> salaryPerMonth = salaryPerMonthRepo.findByemployeeId(employeeId);
+    public List<SalaryPerMonth> getSalaryPerMonth(Long employeeId) {
+        Optional<List<SalaryPerMonth>> salaryPerMonth = salaryPerMonthRepo.findByemployeeId(employeeId);
         if(salaryPerMonth.isPresent()){
             return salaryPerMonth.get();
         }else{

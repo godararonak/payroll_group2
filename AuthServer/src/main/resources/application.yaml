@@ -7,7 +7,7 @@ spring:
 #    url: jdbc:postgresql://postgresd:5432/authdb
     url: jdbc:postgresql://localhost:5432/authDb
     username: postgres
-    password: postgres
+    password: user
   jpa:
     hibernate:
       ddl-auto: update

@@ -7,7 +7,7 @@ spring:
 #    url: jdbc:postgresql://postgresd:5432/salary
     url: jdbc:postgresql://localhost:5432/salary
     username: postgres
-    password: postgres
+    password: user
   jpa:
     hibernate:
       ddl-auto: update

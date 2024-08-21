@@ -22,7 +22,7 @@ import java.io.UnsupportedEncodingException;
 import java.util.List;
 import java.util.Optional;
 
-@CrossOrigin
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 @RequestMapping("/api/v1/auth")
 @RestController
 public class AuthController {
@@ -30,9 +30,9 @@ public class AuthController {
     private AuthService authService;
 
     @PostMapping("/register")
-    public ResponseEntity<ResponseDto> register(@RequestBody RegisterDTO registerDto) {
+    public ResponseEntity<Object> register(@RequestBody RegisterDTO registerDto) {
         try {
-            ResponseDto response = authService.register(registerDto);
+            Object response = authService.register(registerDto);
             return new ResponseEntity<>(response, HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>(new ResponseDto(e.getMessage()), HttpStatus.BAD_REQUEST);
