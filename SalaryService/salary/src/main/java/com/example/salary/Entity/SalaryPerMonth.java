@@ -31,6 +31,4 @@ private Integer year;
 private double salary;
 
 
-
-
 }

@@ -3,9 +3,11 @@ package com.example.salary.Services.Impl;
 import com.example.salary.Dto.AllEmployeeSalary;
 import com.example.salary.Dto.UserDto;
 import com.example.salary.Entity.Salary;
+import com.example.salary.Entity.SalaryPerMonth;
 import com.example.salary.ExceptionHandling.DuplicateResourceException;
 import com.example.salary.ExceptionHandling.ResourceNotFoundException;
 import com.example.salary.Repository.LeavesRepo;
+import com.example.salary.Repository.SalaryPerMonthRepo;
 import com.example.salary.Repository.SalaryRepo;
 import com.example.salary.Services.SalaryService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +35,8 @@ public class SalaryServiceImpl implements SalaryService {
     @Autowired
     LeavesRepo leavesRepo;
 
+    @Autowired
+    SalaryPerMonthRepo salaryPerMonthRepo;
 
     @Override
     public Salary saveSalary(Salary salary) {
@@ -139,5 +143,21 @@ public class SalaryServiceImpl implements SalaryService {
         modifiedSalaryPayload.setTotalPages(pagePost.getTotalPages());
         return modifiedSalaryPayload;
 
+    }
+
+    @Override
+    public List<SalaryPerMonth> getAllPerMonth() {
+        List<SalaryPerMonth> salaryPerMonths= salaryPerMonthRepo.findAll();
+        return salaryPerMonths;
+    }
+
+    @Override
+    public SalaryPerMonth getSalaryPerMonth(Long employeeId) {
+        Optional<SalaryPerMonth> salaryPerMonth = salaryPerMonthRepo.findByemployeeId(employeeId);
+        if(salaryPerMonth.isPresent()){
+            return salaryPerMonth.get();
+        }else{
+            throw new ResourceNotFoundException("Employee","id",employeeId);
+        }
     }
 }

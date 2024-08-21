@@ -3,12 +3,15 @@ import com.example.salary.Dto.AllEmployeeSalary;
 import com.example.salary.Dto.ApiResponse;
 import com.example.salary.Dto.ResponseDto;
 import com.example.salary.Entity.Salary;
+import com.example.salary.Entity.SalaryPerMonth;
 import com.example.salary.Services.SalaryService;
 import com.example.salary.config.AppConstants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 
 @CrossOrigin
@@ -55,6 +58,27 @@ public class SalaryController {
             return new ResponseEntity<>(new ResponseDto(e.getMessage()),HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    @GetMapping("fetchAllPerMonth")
+    public ResponseEntity<Object> getSalary() {
+        try {
+            List<SalaryPerMonth> allPerMonth= salaryService.getAllPerMonth();
+            return new ResponseEntity<>(allPerMonth, HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity<>(new ResponseDto(e.getMessage()),HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping("fetchPerMonth/{employeeId}")
+    public ResponseEntity<Object> getSalaryPerMonth(@PathVariable Long employeeId) {
+        try {
+            SalaryPerMonth salary = salaryService.getSalaryPerMonth(employeeId);
+            return new ResponseEntity<>(salary, HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity<>(new ResponseDto(e.getMessage()),HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
 
 
     @GetMapping("/getAll")

@@ -1,14 +1,11 @@
 server:
-<<<<<<< HEAD
   port: 8282
-=======
-  port: 8989
->>>>>>> 0b6fccc7e6fd255e23c907a65dae6f350ce7225a
 
 spring:
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://postgresd:5432/salary
+#    url: jdbc:postgresql://postgresd:5432/salary
+    url: jdbc:postgresql://localhost:5432/salary
     username: postgres
     password: postgres
   jpa:
@@ -32,18 +29,5 @@ spring:
       register-with-eureka: true
       service-url:
         defaultZone: http://localhost:8761/eureka
-
-<<<<<<< HEAD
-  eureka:
-    instance:
-      prefer-ip-address: true
-    client:
-      fetch-registry: true
-      register-with-eureka: true
-      service-url:
-        defaultZone: http://localhost:8761/eureka
-
-=======
->>>>>>> 0b6fccc7e6fd255e23c907a65dae6f350ce7225a
 
 

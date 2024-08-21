@@ -1,6 +1,7 @@
 package com.example.salary.Controller;
 
 
+import com.example.salary.Dto.CalculateMonthlySalaryDto;
 import com.example.salary.Dto.Leave;
 import com.example.salary.Dto.MonthlySalary;
 import com.example.salary.Dto.ResponseDto;
@@ -131,11 +132,9 @@ public class LeavesController {
     // Endpoint for calculating monthly salary
     @GetMapping("/salary")
     public ResponseEntity<Object> calculateMonthlySalary(
-            @RequestParam Long employeeId,
-            @RequestParam int month,
-            @RequestParam int year) {
+            CalculateMonthlySalaryDto calculateMonthlySalaryDto) {
         try {
-            SalaryPerMonth monthlySalary = leaveService.generateSalary(employeeId, month, year);
+            SalaryPerMonth monthlySalary = leaveService.generateSalary(calculateMonthlySalaryDto.getEmployeeId(),calculateMonthlySalaryDto.getMonth(),calculateMonthlySalaryDto.getYear());
             return new ResponseEntity<>(monthlySalary, HttpStatus.OK);
         }catch (Exception e){
             return new ResponseEntity<>(new ResponseDto(e.getMessage()),HttpStatus.INTERNAL_SERVER_ERROR);
