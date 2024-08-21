@@ -6,7 +6,7 @@ spring:
     driver-class-name: org.postgresql.Driver
     url: jdbc:postgresql://localhost:5432/user
     username: postgres
-    password: user
+    password: Raja@nagar08
   jpa:
     hibernate:
       ddl-auto: update
@@ -25,14 +25,12 @@ logging:
     org.springframework.cloud.gateway: DEBUG
     org.springframework.web: DEBUG
 
-
-#
-#eureka:
-#  instance:
-#    prefer-ip-address: true
-#  client:
-#    fetch-registry: true
-#    register-with-eureka: true
-#    service-url:
-#      defaultZone: http://localhost:8761/eureka
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    fetch-registry: true
+    register-with-eureka: true
+    service-url:
+      defaultZone: http://localhost:8761/eureka
 

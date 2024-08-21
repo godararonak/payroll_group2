@@ -3,6 +3,7 @@ package com.example.AuthServer.service.impl;
 import com.example.AuthServer.dto.EmployeeDto;
 import com.example.AuthServer.dto.JWTDto;
 import com.example.AuthServer.dto.ResponseDto;
+import com.example.AuthServer.dto.UserDto;
 import com.example.AuthServer.entity.Role;
 import com.example.AuthServer.entity.User;
 import com.example.AuthServer.payload.LoginDTO;
@@ -80,7 +81,10 @@ public class AuthServiceImpl implements AuthService {
         jwtDto.setJwt(token);
         jwtDto.setRole(role);
         jwtDto.setFirstLogin(false);
-        jwtDto.setUserId(202L);
+        RestTemplate restTemplate=new RestTemplate();
+        String url = "http://localhost:8181/api/v1/employees/exist/" + user.getUsername();
+        ResponseEntity<UserDto> response = restTemplate.getForEntity(url, UserDto.class);
+        jwtDto.setUserId(response.getBody().getId());
         return jwtDto;
     }
 

@@ -19,12 +19,16 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Boolean exists(Long employeeId){
-
         boolean exist = false;
         exist = userRepo.existsById(employeeId);
-
         return exist;
+    }
 
+    @Override
+    public Users exists(String username) {
+        boolean exist=false;
+        Users foundEmployee= userRepo.findByEmail(username).get();
+        return foundEmployee;
     }
 
     @Override

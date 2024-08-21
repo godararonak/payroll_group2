@@ -1,4 +1,4 @@
-package com.example.salary.Dto;
+package com.example.AuthServer.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

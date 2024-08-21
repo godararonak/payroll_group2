@@ -26,7 +26,7 @@ import java.util.List;
         @Autowired
         ModelMapper modelMapper;
 
-        @GetMapping("/exist/{id}")
+        @GetMapping("/{id}")
         public ResponseEntity<ResponseDto> existsById(@PathVariable Long empId){
 
         Boolean ans = userService.exists(empId);
@@ -37,6 +37,16 @@ import java.util.List;
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResponseDto("User does not exist"));
         }
 }
+
+       @GetMapping("/exist/{username}")
+       public ResponseEntity<Object> existsById(@PathVariable String username){
+           try{
+               Users users = userService.exists(username);
+               return new ResponseEntity<>(users,HttpStatus.FOUND);
+           }catch (Exception e){
+               return new ResponseEntity<>(new ResponseDto(e.getMessage()),HttpStatus.NOT_FOUND);
+           }
+       }
 
         @GetMapping("/ping")
         public ResponseEntity<String> Ping() {
