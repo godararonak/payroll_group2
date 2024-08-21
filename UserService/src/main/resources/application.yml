@@ -6,7 +6,7 @@ spring:
     driver-class-name: org.postgresql.Driver
     url: jdbc:postgresql://localhost:5432/user
     username: postgres
-    password: root
+    password: user
   jpa:
     hibernate:
       ddl-auto: update
@@ -19,6 +19,12 @@ spring:
 
   config:
     import: configserver:http://localhost:8484
+
+logging:
+  level:
+    org.springframework.cloud.gateway: DEBUG
+    org.springframework.web: DEBUG
+
 
 #
 #eureka:

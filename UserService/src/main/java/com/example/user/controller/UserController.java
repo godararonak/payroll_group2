@@ -1,5 +1,6 @@
 package com.example.user.controller;
 
+import com.example.user.dto.ResponseDto;
 import com.example.user.dto.UserDto;
 import com.example.user.entity.Users;
 import com.example.user.services.UserService;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 
+   @CrossOrigin
     @RestController
     @RequestMapping("/api/v1/employees")
 
@@ -25,17 +27,16 @@ import java.util.List;
         ModelMapper modelMapper;
 
         @GetMapping("/exist/{id}")
-        public ResponseEntity<String> existsById(@PathVariable Long empId){
+        public ResponseEntity<ResponseDto> existsById(@PathVariable Long empId){
 
         Boolean ans = userService.exists(empId);
 
         if(ans){
-            return ResponseEntity.status(HttpStatus.FOUND).body("User exists");
+            return ResponseEntity.status(HttpStatus.FOUND).body(new ResponseDto("User exists"));
         }else{
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User does not exist");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResponseDto("User does not exist"));
         }
-
-        }
+}
 
         @GetMapping("/ping")
         public ResponseEntity<String> Ping() {
@@ -44,39 +45,58 @@ import java.util.List;
         }
 
         @GetMapping("/fetch-all")
-        public ResponseEntity<List<Users>> getAllEmployees(){
-            System.out.println("fetch all successfull");
-            List<Users> employeeList = userService.getAllEmployees();
-            return ResponseEntity.status(HttpStatus.OK).body(employeeList);
+        public ResponseEntity<Object> getAllEmployees(){
+            try {
+                System.out.println("fetch all successfull");
+                List<Users> employeeList = userService.getAllEmployees();
+                return ResponseEntity.status(HttpStatus.OK).body(employeeList);
+            }catch (Exception e){
+                return new ResponseEntity<>(new ResponseDto(e.getMessage()),HttpStatus.INTERNAL_SERVER_ERROR);
+            }
 
         }
 
         @GetMapping("/fetchEmployee/{employeeId}")
-        public ResponseEntity<Users> getEmployeeById(@PathVariable Long employeeId){
-            System.out.println("get mapping successfull by id");
-            Users user = userService.getEmployeeById(employeeId);
-            return ResponseEntity.status(HttpStatus.OK).body(user);
+        public ResponseEntity<Object> getEmployeeById(@PathVariable Long employeeId){
+            try {
+                System.out.println("get mapping successfull by id");
+                Users user = userService.getEmployeeById(employeeId);
+                return ResponseEntity.status(HttpStatus.OK).body(user);
+            }catch (Exception e){
+                return new ResponseEntity<>(new ResponseDto(e.getMessage()),HttpStatus.INTERNAL_SERVER_ERROR);
+            }
         }
 
         @PostMapping("/createEmployee")
-        public ResponseEntity<Users> createUsers(@RequestBody UserDto userDto){
-            Users users=userService.createEmployee(modelMapper.map(userDto,Users.class));
-            return new ResponseEntity<>(users,HttpStatus.CREATED);
+        public ResponseEntity<Object> createUsers(@RequestBody UserDto userDto){
+            try {
+                Users users = userService.createEmployee(modelMapper.map(userDto, Users.class));
+                return new ResponseEntity<>(users, HttpStatus.CREATED);
+            }catch(Exception e){
+                return new ResponseEntity<>(new ResponseDto(e.getMessage()),HttpStatus.INTERNAL_SERVER_ERROR);
+            }
         }
 
         @PutMapping("/{id}")
         @Transactional
-        public ResponseEntity<Users>updateEmployee(@PathVariable Long id, @RequestBody Users users){
-            Users user = userService.updateUser(id,users);
-            return new ResponseEntity<>(user,HttpStatus.OK);
+        public ResponseEntity<Object>updateEmployee(@PathVariable Long id, @RequestBody Users users){
+            try {
+                Users user = userService.updateUser(id, users);
+                return new ResponseEntity<>(user, HttpStatus.OK);
+            }catch (Exception e){
+                return new ResponseEntity<>(new ResponseDto(e.getMessage()),HttpStatus.INTERNAL_SERVER_ERROR);
+            }
          }
 
         @DeleteMapping("/delete/{id}")
-        public ResponseEntity<Users> deleteEmployee(@PathVariable Long id){
-
-            Users user = userService.getEmployeeById(id);
-            user.setActive(false);
-            userService.updateUser(id, user);
-            return new ResponseEntity<>(user, HttpStatus.OK);
+        public ResponseEntity<Object> deleteEmployee(@PathVariable Long id){
+            try {
+                Users user = userService.getEmployeeById(id);
+                user.setActive(false);
+                userService.updateUser(id, user);
+                return new ResponseEntity<>(user, HttpStatus.OK);
+            }catch (Exception e){
+                return new ResponseEntity<>(new ResponseDto(e.getMessage()),HttpStatus.INTERNAL_SERVER_ERROR);
+            }
         }
 }

@@ -45,7 +45,7 @@ public class Users {
 
     @Pattern(regexp = "^$|[0-9]{10}", message = "Mobile number should have ten digits")
     @Column(name="phone_number")
-    private String Phone_Number;
+    private String phone_Number;
 
     @NotNull(message ="Assign a role to Employee")
     @Column(name = "Role")

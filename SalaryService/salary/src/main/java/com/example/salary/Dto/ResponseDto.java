@@ -1,4 +1,6 @@
-package com.example.user.dto;
+package com.example.salary.Dto;
+
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -8,6 +10,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class ResponseDto {
 
-   String response;
+    String response;
 
 }

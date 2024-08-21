@@ -34,12 +34,12 @@ public class SecurityConfig {
                                 authorize
 //                                .anyRequest().permitAll()
 //                                        .requestMatchers(HttpMethod.POST,"/api/auth/roles").hasAuthority("admin")
-                                        .requestMatchers(HttpMethod.PUT, "/api/auth/**").permitAll()
-                                        .requestMatchers(HttpMethod.POST, "/api/auth/**").permitAll()
-                                        .requestMatchers(HttpMethod.GET,"/api/v1/employees/fetch-all").hasAuthority("admin")
-                                        .requestMatchers(HttpMethod.POST,"/api/v1/salary/").hasAuthority("accountant")
-                                        .requestMatchers(HttpMethod.PUT,"/api/v1/salary/").hasAuthority("accountant")
-                                        .requestMatchers(HttpMethod.GET,"/api/v1/salary/getAll").hasAuthority("accountant")
+                                        .requestMatchers(HttpMethod.PUT, "/api/**").permitAll()
+                                        .requestMatchers(HttpMethod.POST, "/api/**").permitAll()
+                                        .requestMatchers(HttpMethod.GET,"/api/**").permitAll()
+//                                        .requestMatchers(HttpMethod.POST,"/api/v1/salary/").hasAuthority("accountant")
+//                                        .requestMatchers(HttpMethod.PUT,"/api/v1/salary/").hasAuthority("accountant")
+//                                        .requestMatchers(HttpMethod.GET,"/api/v1/salary/getAll").hasAuthority("accountant")
 
                                         .anyRequest().authenticated()
                 ).exceptionHandling(ex -> ex.authenticationEntryPoint(authenticationEntryPoint))
