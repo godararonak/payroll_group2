@@ -1,4 +1,9 @@
-FROM ubuntu:latest
-LABEL authors="ronak.godara"
+FROM openjdk:22
 
-ENTRYPOINT ["top", "-b"]
+ARG JAR_FILE=target/*.jar
+
+COPY ${JAR_FILE} sampleapp.jar
+
+ENTRYPOINT ["java","-jar","/sampleapp.jar"]
+
+EXPOSE 8585
